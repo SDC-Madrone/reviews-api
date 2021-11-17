@@ -61,11 +61,11 @@ CREATE TABLE reccomended (
 CREATE TABLE ratings (
   id: INT AUTO_INCREMENT,
   product_id: INT
-  1: INT,
-  2: INT,
-  3: INT,
-  4: INT,
-  5: INT,
+  '1': INT,
+  '2': INT,
+  '3': INT,
+  '4': INT,
+  '5': INT,
 
   PRIMARY KEY (id)
 );
