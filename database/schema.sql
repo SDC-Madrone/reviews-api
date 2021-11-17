@@ -8,8 +8,7 @@ CREATE TABLE reviews (
   product_id: INT, -- goes in outer object
   rating: SMALLINT,
   summary: VARCHAR(60),
-    -- boolean type, BIT, just takes 1 (true) or 0 (false)
-  recommend: BIT,
+  recommend: BIT, -- boolean type, BIT, just takes 1 (true) or 0 (false)
   response: VARCHAR(1000),
   body: VARCHAR(1000),
   date: DATETIME,
@@ -19,7 +18,9 @@ CREATE TABLE reviews (
   -- not sent with response
   reported: BIT,
   reviewer_email: VARCHAR(60),
-  not_helpfulness: INT
+  not_helpfulness: INT,
+
+  PRIMARY KEY (id)
 );
 
 
@@ -29,11 +30,13 @@ CREATE TABLE photos (
   review_id: INT,
   url: VARCHAR(500),
 
-PRIMARY KEY (id),
-FOREIGN KEY (review_id)
-  REFERENCES reviews(id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (review_id)
+    REFERENCES reviews(id)
 );
 
+
+-- METADATA TABLES:
 
 CREATE TABLE characteristics (
   id: INT AUTO_INCREMENT,
@@ -58,9 +61,11 @@ CREATE TABLE reccomended (
 CREATE TABLE ratings (
   id: INT AUTO_INCREMENT,
   product_id: INT
-  1: SMALLINT,
-  2: SMALLINT,
-  3: SMALLINT,
-  4: SMALLINT,
-  5: SMALLINT
+  1: INT,
+  2: INT,
+  3: INT,
+  4: INT,
+  5: INT,
+
+  PRIMARY KEY (id)
 );
