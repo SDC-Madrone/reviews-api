@@ -7,27 +7,30 @@ mongoose.connect('mongodb://localhost/ratings-and-reviews', {
 
 // schema
 var reviewSchema = mongoose.Schema({
+  // k:v pairs to send in the response:
+  product_id: Number, // this one will go into an outer object
   _id: mongoose.ObjectId,
-  product_id: Number,
-  user_id: Number,
-  helpful_count: Number,
-  not_helpful_count: Number,
-  created_at: Date,
-
   rating: Number,
-  recommended: Boolean,
-  characteristics: [Number]
-
-  title_summary: String,
+  summary: String,
+  recommend: Boolean,
+  response: String,
   body: String,
-  photos: [String]
+  date: Date,
+  reviewer_name: String,
+  helpfulness: Number,
+  photos: [String],
 
+  //k:v pairs NOT to send in the response:
+  reported: Boolean,
+  reviewer_email: String,
+  not_helpfulness: Number
 });
 
-var userSchema = mongoose.Schema({
-  _id: mongoose.ObjectId,
-  name: String,
-  email: String
+var metaSchema = mongoose.Schema({
+  product_id: Number,
+  ratings: {},
+  recommended: {},
+  characteristics: {}
 });
 
 var characteristicSchema = mongoose.Schema({
@@ -41,5 +44,5 @@ var characteristicSchema = mongoose.Schema({
   // you pass in the schema you created so that mongoDB knows HOW to store your data
 // each instance of a MODEL is called a DOCUMENT
 var Reviews = mongoose.model('Review', reviewSchema);
-var Users = mongoose.model('User', userSchema);
+var MetaObjects = mongoose.model('MetaObject', metaSchema);
 var Characteristics = mongoose.model('Characteristic', characteristicSchema);
