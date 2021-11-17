@@ -27,7 +27,7 @@ var reviewSchema = mongoose.Schema({
 });
 
 var metaSchema1 = mongoose.Schema({
-  product_id: Number,
+  product_id: String,
   ratings: {
     '1': String,
     '2': String,
@@ -46,7 +46,7 @@ var metaCharacteristicSchema = mongoose.Schema({
   _id: mongoose.ObjectId,
   product_id: String,
   name: String,
-  value: Number
+  value: String
 });
 
 
@@ -59,7 +59,16 @@ var MetaCharacteristics = mongoose.model('MetaCharacteristic', metaCharacteristi
 
 
 // questions on review:
-  // will it slow down performance to .selectAll() characteristics with product_id X?
-  // is it safe to assume no more characteristics will be added to the initial 6?
+  // will it slow down performance to .findAll() characteristics with product_id X?
+    // if yes, is it safe to assume no more characteristics will be added to the current 6?
+      // if yes, then probably better to give every document a slot for all 6...
+      // in reviewSchema:
+      //   characteristics: {
+      //     Quality: {id: mongoose.ObjectId, value: String} // factor thes eown into their own schema, call `new Characteristic`
+      //     Size: {id: mongoose.ObjectId, value: String}
+      //     Fit: {id: mongoose.ObjectId, value: String}
+      //     ...
+      //   }
+
   // will using a number instead of string slow down performance due to higher storage?
     // or will storing as a Number require me to make values .toString() before sending a response (slower)?
