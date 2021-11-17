@@ -3,32 +3,32 @@ USE ratings_and_reviews;
 
 
 CREATE TABLE reviews (
-  -- sent with response:
-  id: INT AUTO_INCREMENT,
-  product_id: INT, -- goes in outer object
-  rating: SMALLINT,
-  summary: VARCHAR(60),
-  recommend: BIT, -- boolean type, BIT, just takes 1 (true) or 0 (false)
-  response: VARCHAR(1000),
-  body: VARCHAR(1000),
-  date: DATETIME,
-  reviewer_name: VARCHAR(60),
-  helpfulness: INT,
+  -- sent with response
+  id INT AUTO_INCREMENT NOT NULL,
+  product_id INT NOT NULL, -- goes in outer object of response
+  rating TINYINT NOT NULL,
+  summary VARCHAR(60) DEFAULT NULL,
+  recommend BIT NOT NULL, -- boolean type BIT can be 1 (true) or 0 (false)
+  response VARCHAR(1000) DEFAULT NULL,
+  body VARCHAR(1000) NOT NULL,
+  date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  reviewer_name VARCHAR(60) NOT NULL,
+  helpfulness INT DEFAULT 0,
 
   -- not sent with response
-  reported: BIT,
-  reviewer_email: VARCHAR(60),
-  not_helpfulness: INT,
+  reported BIT DEFAULT 0, -- 0 means false here
+  reviewer_email VARCHAR(60) NOT NULL,
+  not_helpfulness INT DEFAULT 0,
 
   PRIMARY KEY (id)
 );
 
 
 CREATE TABLE photos (
-  id: INT AUTO_INCREMENT,
+  id INT AUTO_INCREMENT NOT NULL,
   -- link any row from this table to a review
-  review_id: INT,
-  url: VARCHAR(500),
+  review_id INT NOT NULL,
+  url VARCHAR(500) NOT NULL,
 
   PRIMARY KEY (id),
   FOREIGN KEY (review_id)
@@ -36,36 +36,53 @@ CREATE TABLE photos (
 );
 
 
--- METADATA TABLES:
+-- METADATA TABLES
 
 CREATE TABLE characteristics (
-  id: INT AUTO_INCREMENT,
-  product_id: INT,
-  name: VARCHAR(20),
-  value: SMALLINT,
+  id INT AUTO_INCREMENT NOT NULL,
+  name VARCHAR(20) NOT NULL,
 
   PRIMARY KEY (id)
 );
 
+-- join table for characteristic X that's on review Y
+CREATE TABLE characteristics_reviews (
+  id INT AUTO_INCREMENT NOT NULL,
+  characteristic_id INT NOT NULL,
+  review_id INT NOT NULL,
+  value TINYINT NOT NULL
 
-CREATE TABLE reccomended (
-  id: INT AUTO_INCREMENT,
-  product_id: INT,
-  false: INT,
-  true: INT,
-
-  PRIMARY KEY (id)
-)
-
-
-CREATE TABLE ratings (
-  id: INT AUTO_INCREMENT,
-  product_id: INT
-  '1': INT,
-  '2': INT,
-  '3': INT,
-  '4': INT,
-  '5': INT,
-
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (characteristic_id)
+    REFERENCES characteristics(id),
+  FOREIGN KEY (review_id)
+    REFERENCES reviews(id)
 );
+
+
+
+
+
+-- CREATE TABLE ratings (
+--   id INT AUTO_INCREMENT,
+--   product_id INT
+--   '1' INT,
+--   '2' INT,
+--   '3' INT,
+--   '4' INT,
+--   '5' INT,
+
+--   PRIMARY KEY (id)
+-- );
+
+
+
+
+-- CREATE TABLE reccomended (
+--   id INT AUTO_INCREMENT,
+--   product_id INT,
+--   false INT,
+--   true INT,
+
+--   PRIMARY KEY (id)
+-- )
