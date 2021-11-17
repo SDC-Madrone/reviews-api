@@ -1,0 +1,24 @@
+{
+  "name": "sdc-reviews",
+  "version": "1.0.0",
+  "description": "reivews-api for Atelier retail",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon ./server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDC-Madrone/reviews-api.git"
+  },
+  "keywords": [
+    "Atelier",
+    "reviews"
+  ],
+  "author": "Elliot Lichtenberg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDC-Madrone/reviews-api/issues"
+  },
+  "homepage": "https://github.com/SDC-Madrone/reviews-api#readme"
+}
