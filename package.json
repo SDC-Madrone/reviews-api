@@ -16,9 +16,16 @@
     "reviews"
   ],
   "author": "Elliot Lichtenberg",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/SDC-Madrone/reviews-api/issues"
   },
-  "homepage": "https://github.com/SDC-Madrone/reviews-api#readme"
+  "homepage": "https://github.com/SDC-Madrone/reviews-api#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.3.3"
+  }
 }
