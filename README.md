@@ -1,13 +1,17 @@
 ### Reviews-api
 Atelier API endpoint for product reviews
 
+# Dependencies:
+- express v4.17.1
+- mysql2 v2.3.3
+
 
 # List Reviews
 Returns a list of reviews for a particular product. This list does not include any reported reviews.
 
 `GET /reviews/`
 
-QueryParameters:
+Query parameters:
 
 Parameter	  Type	    Description
 page	      integer	  Selects the page of results to return. Default 1.
@@ -24,7 +28,7 @@ Returns review metadata for a given product.
 
 `GET /reviews/meta`
 
-Query Parameters:
+Query parameters:
 
 Parameter	    Type	    Description
 product_id	  integer	  Required ID of the product for which data should be returned
@@ -38,7 +42,7 @@ Adds a review for the given product.
 
 `POST /reviews`
 
-Body Parameters:
+Body parameters:
 
 Parameter	        Type	            Description
 product_id	      integer	          Required ID of the product to post the review for

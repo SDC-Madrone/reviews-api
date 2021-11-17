@@ -58,31 +58,3 @@ CREATE TABLE characteristics_reviews (
   FOREIGN KEY (review_id)
     REFERENCES reviews(id)
 );
-
-
-
-
-
--- CREATE TABLE ratings (
---   id INT AUTO_INCREMENT,
---   product_id INT
---   '1' INT,
---   '2' INT,
---   '3' INT,
---   '4' INT,
---   '5' INT,
-
---   PRIMARY KEY (id)
--- );
-
-
-
-
--- CREATE TABLE reccomended (
---   id INT AUTO_INCREMENT,
---   product_id INT,
---   false INT,
---   true INT,
-
---   PRIMARY KEY (id)
--- )
