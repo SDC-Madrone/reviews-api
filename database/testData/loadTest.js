@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { parse } = require('../helpers.js');
+const { parse, generateQueryString } = require('../helpers.js');
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
@@ -21,28 +21,12 @@ const connection = mysql.createConnection({
 
 // tableName: str
 // row: array
-const generateQueryString = (tableName, row) => {
-  var placeHolders = row.map((item, i, arr) => {
-    return '?';
-  });
-  var placeHolderString = placeHolders.join(', ');
-
-  var queryString;
-
-  if (tableName === 'reviews') {
-    queryString = `INSERT INTO ${tableName} (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness) VALUES (${placeHolderString});`;
-  } else {
-    queryString = `INSERT INTO ${tableName} VALUES (${placeHolderString});`
-  }
-
-  return queryString;
-};
 
 
 
 // testFile: str
 // tableName: str
-const testCSV = (localTestFile, tableName) => {
+const depricatedTestCSV = (localTestFile, tableName) => {
   fs.readFile(path.join(__dirname, localTestFile), 'utf8', (err, results) => {
     if (err) {
       console.log('error reading file');
@@ -70,6 +54,21 @@ const testCSV = (localTestFile, tableName) => {
 // connection pooling,
 // .end() for terminal hanging
 
+
+const testCSV = (localTestFile, tableName) => {
+  // LOAD DATA using the file name
+  connection.query('LOAD DATA LOCAL INFILE INTO TABLE photos "./reviews_photosTest.csv" FIELDS TERMINATED BY "," LINES TERMINATED BY "\n";', (err, results, meta) => {
+    if (err) {
+      console.log('error loading data');
+      throw err;
+    }
+
+    console.log('LOADED! CHECK SHELL');
+  })
+    // on success,
+      // console.log(done)
+      // close the connection
+};
 
 
 testCSV('reviewsTest.csv', 'reviews');

@@ -23,7 +23,24 @@ const helpers = {
     // console.log('should now be an array of arrays: ', rows);
     return rows;
 
-  }
+  },
+
+  generateQueryString: function(tableName, row) {
+    var placeHolders = row.map((item, i, arr) => {
+      return '?';
+    });
+    var placeHolderString = placeHolders.join(', ');
+
+    var queryString;
+
+    if (tableName === 'reviews') {
+      queryString = `INSERT INTO ${tableName} (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness) VALUES (${placeHolderString});`;
+    } else {
+      queryString = `INSERT INTO ${tableName} VALUES (${placeHolderString});`
+    }
+
+    return queryString;
+  };
 
 };
 
