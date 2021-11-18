@@ -11,6 +11,12 @@ const helpers = {
         if (entry.length !== 0 && entry[0] === '"') {
           rows[i][k] = entry.slice(1, entry.length - 1);
         }
+
+        if (entry === 'true') {
+          rows[i][k] = '1';
+        } else if (entry === 'false') {
+          rows[i][k] = '0';
+        }
       }
     }
 

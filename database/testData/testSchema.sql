@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   product_id INT NOT NULL, -- goes in outer object of response
   rating TINYINT NOT NULL,
   summary VARCHAR(60) DEFAULT NULL,
-  recommend BIT NOT NULL, -- boolean type BIT can be 1 (true) or 0 (false)
+  recommend BOOLEAN NOT NULL, -- boolean type BIT can be 1 (true) or 0 (false)
   response VARCHAR(1000) DEFAULT NULL,
   body VARCHAR(1000) NOT NULL,
   date BIGINT NOT NULL, -- NOTE: when inserting from the driver, use Date.now()
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   helpfulness INT DEFAULT 0,
 
   -- not sent with response
-  reported BIT DEFAULT 0, -- 0 means false here
+  reported BOOLEAN DEFAULT 0, -- 0 means false here
   reviewer_email VARCHAR(60) NOT NULL,
   not_helpfulness INT DEFAULT 0,
 
