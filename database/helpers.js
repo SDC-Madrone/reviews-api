@@ -14,7 +14,7 @@ const helpers = {
       }
     }
 
-    console.log('should now be an array of arrays: ', rows);
+    // console.log('should now be an array of arrays: ', rows);
     return rows;
 
   }
