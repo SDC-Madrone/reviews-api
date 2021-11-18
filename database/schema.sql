@@ -11,7 +11,7 @@ CREATE TABLE reviews (
   recommend BIT NOT NULL, -- boolean type BIT can be 1 (true) or 0 (false)
   response VARCHAR(1000) DEFAULT NULL,
   body VARCHAR(1000) NOT NULL,
-  date BIGINT DEFAULT UNIX_TIMESTAMP(),
+  date BIGINT NOT NULL, -- NOTE: when inserting from the driver, use Date.now()
   reviewer_name VARCHAR(60) NOT NULL,
   helpfulness INT DEFAULT 0,
 
