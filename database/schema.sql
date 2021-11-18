@@ -23,12 +23,12 @@ CREATE TABLE reviews (
   PRIMARY KEY (id)
 );
 
-
+-- corresponds to reviews_photos.csv
 CREATE TABLE photos (
   id INT AUTO_INCREMENT NOT NULL,
   -- link any row from this table to a review
   review_id INT NOT NULL,
-  url VARCHAR(500) NOT NULL,
+  url VARCHAR(2048) NOT NULL,
 
   PRIMARY KEY (id),
   FOREIGN KEY (review_id)
@@ -38,15 +38,18 @@ CREATE TABLE photos (
 
 -- METADATA TABLES
 
+-- corresponds to characteristics.csv
 CREATE TABLE characteristics (
   id INT AUTO_INCREMENT NOT NULL,
+  product_id INT NOT NULL,
   name VARCHAR(20) NOT NULL,
 
   PRIMARY KEY (id)
 );
 
 -- join table for characteristic X that's on review Y
-CREATE TABLE characteristics_reviews (
+-- corresponds to characteristic_reviews.csv
+CREATE TABLE characteristic_reviews (
   id INT AUTO_INCREMENT NOT NULL,
   characteristic_id INT NOT NULL,
   review_id INT NOT NULL,
