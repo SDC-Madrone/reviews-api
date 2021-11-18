@@ -39,6 +39,7 @@ var metaSchema1 = mongoose.Schema({
     false: String,
     true: String
   }
+  // Would having an ARRAY of characteristics_id's make anything faster/slower? (would have to reshape the data from arr->obj before res.send) either way, it's still an O(n) operation
 });
 
 // not putting this in metaSchema1 to allow for dynamic amt of characteristics
@@ -59,6 +60,8 @@ var MetaCharacteristics = mongoose.model('MetaCharacteristic', metaCharacteristi
 
 
 // questions on review:
+
+
   // will it slow down performance to .findAll() characteristics with product_id X?
     // if yes, is it safe to assume no more characteristics will be added to the current 6?
       // if yes, then probably better to give every document a slot for all 6...
