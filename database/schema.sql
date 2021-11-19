@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS reviews_test;
-USE reviews_test;
+CREATE DATABASE IF NOT EXISTS ratings_and_reviews;
+USE ratings_and_reviews;
 
 
 CREATE TABLE IF NOT EXISTS reviews (

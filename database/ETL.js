@@ -41,13 +41,19 @@ const loadCSV = (fileName, tableName) => {
   );
 };
 
-const initiateLoad = () => {
-  loadCSV('reviews.csv', 'reviews');
+const initiateLoad = (csvFile, table) => {
+  loadCSV(csvFile, table);
 };
 
-// ^ repeat for the remaining files
+// manually typed out the filenames and ran this module for each one, later may refactor to do all at once
+// may need to open a connection pool for 4 processes to run at once? Look into this
+initiateLoad(/*  */);
 
-
+// successfully loaded Nov 18th:
+  // 'reviews.csv', 'reviews'
+  // 'characteristics.csv', 'characteristics'
+  // 'characteristic_reviews.csv', 'characteristic_reviews'
+  // 'photos.csv', 'photos'
 
 
 // TODO:
