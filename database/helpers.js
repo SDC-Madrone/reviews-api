@@ -40,6 +40,32 @@ const helpers = {
     }
 
     return queryString;
+  },
+
+  depricatedETL: function(localTestFile, tableName) {
+    fs.readFile(path.join(__dirname, localTestFile), 'utf8', (err, results) => {
+      if (err) {
+        console.log('error reading file');
+        connection.end();
+        throw err;
+      } else {
+        var allRows = helpers.parse(results);
+        var queryString;
+
+        // won't close the connection when done, this would need to be promised .then(connection.end())
+        for (var i = 0; i < allRows.length; i++) {
+          queryString = helpers.generateQueryString(tableName, allRows[i]);
+          // console.log(queryString);
+          connection.query(queryString, allRows[i], (err, results, fields) => {
+            if (err) {
+              console.log('error inserting into characteristics');
+              connection.end();
+              throw err;
+            }
+          });
+        }
+      }
+    });
   };
 
 };
