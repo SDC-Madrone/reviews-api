@@ -7,7 +7,7 @@ const controllers = {
   handleGetReviews: function(req, res) {
     models.getReviews(req.query)// should return a promise
     .then(([rows, fields]) => {
-      console.log('results from the query: ', rows);
+
 
       res.status(200).send(rows);
     })

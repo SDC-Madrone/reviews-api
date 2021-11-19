@@ -10,7 +10,7 @@ const models = {
     var product_id = queryParams.product_id;
 
 
-    return queryMethods.retrive()
+    return queryMethods.selectReviews(page, count, sort, product_id);
 
   },
 

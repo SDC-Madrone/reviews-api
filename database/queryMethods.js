@@ -9,9 +9,12 @@ const connection = mysql.createConnection({
 
 const queryMethods = {
   // returns a promise
-  retrive: function() {
+  selectReviews: function(page, count, sort, product_id) {
     // should query the database for reviews specified
-    return connection.promise().query('SELECT reviewer_name, reviewer_email FROM reviews WHERE id = 1;');
+    var sqlQuery = 'SELECT * FROM reviews WHERE product_id = ? LIMIT ?;'
+    console.log('product_id: ', product_id);
+    console.log('count', count);
+    return connection.promise().query(sqlQuery, [Number(product_id), Number(count)]);
 
   },
 
