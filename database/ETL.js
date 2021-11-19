@@ -57,7 +57,7 @@ initiateLoad(/*  */);
 
 
 // TODO:
-// clean the data after loading, eg.
+// if you need to clean any data:
 // UPDATE reviews
 // SET response = null
 // WHERE response = 'null';
