@@ -17,9 +17,9 @@ const loadCSV = (fileName, tableName) => {
   var pathToFile = path.join(baseDirectory, fileName);
   var query;
   if (fileName === 'reviews.csv') {
-    query = "LOAD DATA LOCAL INFILE ? INTO TABLE reviews FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness);";
+    query = "LOAD DATA LOCAL INFILE ? INTO TABLE reviews FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 LINES (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness);";
   } else {
-    query = `LOAD DATA LOCAL INFILE ? INTO TABLE ${tableName} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;`;
+    query = `LOAD DATA LOCAL INFILE ? INTO TABLE ${tableName} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 LINES;`;
   }
 
   return connection.promise().query({
@@ -31,6 +31,10 @@ const loadCSV = (fileName, tableName) => {
 
 
 const loadAll = () => {
+  var intervalID = setInterval(()=> {
+    console.log('loading...')
+  }, 2500);
+
   loadCSV('reviews.csv', 'reviews')
     .then(() => {
       console.log(`LOADED REVIEWS`);
@@ -46,10 +50,12 @@ const loadAll = () => {
     })
     .then(() => {
       console.log('LOADED PHOTOS');
+      clearInterval(intervalID);
       connection.end();
     })
     .catch((err) => {
-      console.log('error loading csv files');
+      console.log('error loading csv files :(');
+      clearInterval(intervalID);
       connection.end();
       throw err;
     });
@@ -67,3 +73,4 @@ loadAll();
 // WHERE response = 'null';
 
 // check out connection pooling for when multiple servers need to access/query you database,
+
