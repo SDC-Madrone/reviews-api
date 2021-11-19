@@ -20,15 +20,22 @@ const connection = mysql.createConnection({
 // check out connection pooling for when multiple servers need to access/query you database,
 
 
-const testCSV = (localTestFile) => {
+const testCSV = (localTestFile, tableName) => {
   // LOAD DATA using the file name
+  var fileName = localTestFile.slice(2);
+  var query;
 
-  var query = "LOAD DATA LOCAL INFILE ? INTO TABLE reviews FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness);";
+  if (fileName === 'reviews') {
+    query = "LOAD DATA LOCAL INFILE ? INTO TABLE reviews FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness);";
+  } else {
+    query = `LOAD DATA LOCAL INFILE ? INTO TABLE ${tableName} FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES;`;
+  }
+
   connection.query(
     {
       sql: query,
       values: [localTestFile],
-      infileStreamFactory: () => fs.createReadStream(path.join(__dirname, localTestFile.slice(2)))
+      infileStreamFactory: () => fs.createReadStream(path.join(__dirname, fileName))
     },
     (err, results, meta) => {
       if (err) {
@@ -44,14 +51,8 @@ const testCSV = (localTestFile) => {
 
 };
 
-testCSV('./reviewsTest.csv');
-
-// testCSV('./characteristics.csv');
-// testCSV('characteristic_reviewsTest.csv');
-// testCSV('reviews_photos.csv');
-
-//TESTED AND DONE:
-
-
-
-// '(id, product_id, rating, date, summary, body, recommend, reviewer_name, reviewer_email, response, helpfulness)'
+// uncomment to test:
+// testCSV('./reviewsTest.csv');
+// testCSV('./characteristicsTest.csv', 'characteristics');
+// testCSV('./characteristic_reviewsTest.csv', 'characteristic_reviews');
+testCSV('./reviews_photosTest.csv', 'photos');
