@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { parse, generateQueryString } = require('../helpers.js');
+// const { parse, generateQueryString } = require('../helpers.js');
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
@@ -17,27 +17,21 @@ const connection = mysql.createConnection({
 // SET response = null
 // WHERE response = 'null';
 
-// check out equivalent LOAD DATA statement if trouble:
-// \copy characteristic_reviews(id, characteristic_id, review_id, value) FROM '/home/ubuntu/CSV/characteristic_reviews.csv' DELIMITER ',' CSV HEADER;
-
-
-
-// connection pooling,
+// check out connection pooling for when multiple servers need to access/query you database,
 
 
 
 
 
-var query = "LOAD DATA LOCAL INFILE './reviews_photosTest.csv' INTO TABLE photos FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';"
-
-
-const testCSV = (localTestFile, tableName) => {
+const testCSV = (localTestFile) => {
   // LOAD DATA using the file name
+
+  var query = "LOAD DATA LOCAL INFILE ? INTO TABLE reviews FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness);";
   connection.query(
     {
       sql: query,
-      values: [],
-      infileStreamFactory: () => fs.createReadStream(path.join(__dirname, 'reviews_photosTest.csv'))
+      values: [localTestFile],
+      infileStreamFactory: () => fs.createReadStream(path.join(__dirname, localTestFile.slice(2)))
     },
     (err, results, meta) => {
       if (err) {
@@ -54,10 +48,12 @@ const testCSV = (localTestFile, tableName) => {
 };
 
 
-testCSV();
+testCSV('./reviewsTest.csv');
 
 // testCSV('characteristic_reviewsTest.csv', 'characteristic_reviews');
 // testCSV('characteristics.csv', 'characteristics');
+
+//TESTED AND DONE:
 // testCSV('reviews_photos.csv', 'photos');
 
 
