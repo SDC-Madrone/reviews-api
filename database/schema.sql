@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS ratings_and_reviews;
-USE ratings_and_reviews;
+CREATE DATABASE IF NOT EXISTS reviews_test;
+USE reviews_test;
 
 
 CREATE TABLE IF NOT EXISTS reviews (
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   product_id INT NOT NULL, -- goes in outer object of response
   rating TINYINT NOT NULL,
   summary VARCHAR(60) DEFAULT NULL,
-  recommend BOOLEAN NOT NULL, -- boolean type BIT can be 1 (true) or 0 (false)
+  recommend VARCHAR(5) NOT NULL, -- using varchar to avoid 1/0 t/f (false)
   response VARCHAR(1000) DEFAULT NULL,
   body VARCHAR(1000) NOT NULL,
   date BIGINT NOT NULL, -- NOTE: when inserting from the driver, use Date.now()
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   helpfulness INT DEFAULT 0,
 
   -- not sent with response
-  reported BOOLEAN DEFAULT 0, -- 0 means false here
+  reported VARCHAR(5) DEFAULT 'false', -- using varchar to avoid 1/0 t/f
   reviewer_email VARCHAR(60) NOT NULL,
   not_helpfulness INT DEFAULT 0,
 

@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-// const { parse, generateQueryString } = require('../helpers.js');
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
