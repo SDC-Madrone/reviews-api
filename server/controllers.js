@@ -6,11 +6,15 @@ const controllers = {
   // GET /reviews
   handleGetReviews: function(req, res) {
     models.getReviews(req.query)// should return a promise
-    .then((resultsOfQuery) => {
-      res.status(200).send(resultsOfQuery);
+    .then(([rows, fields]) => {
+      console.log('results from the query: ', rows);
+
+      res.status(200).send(rows);
     })
     .catch((err) => {
+      console.log('error querying for reviews');
       res.status(404).send('Not found :(');
+      throw err;
     });
 
 

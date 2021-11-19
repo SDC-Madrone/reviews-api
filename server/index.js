@@ -4,8 +4,9 @@ const PORT = 3000;
 const app = express();
 
 // define middleware
-// define routes (app.use them as middleware?)
+app.use(express.json());
 
+// routes
 app.get('/', (req, res) => {
   res.status(200).send('Hello world! This endpoint wont\'t serve anything useful. Please specify /reviews or /reviews/meta in your path');
 })

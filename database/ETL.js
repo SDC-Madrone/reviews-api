@@ -10,10 +10,10 @@ const connectionOptions = {
   flags: ['+LOCAL_FILES']
 };
 
+const connection = mysql.createConnection(connectionOptions);
 
 const loadCSV = (fileName, tableName) => {
 
-  var connection = mysql.createConnection(connectionOptions);
   var pathToFile = path.join(baseDirectory, fileName);
   var query;
   if (fileName === 'reviews.csv') {
@@ -22,7 +22,7 @@ const loadCSV = (fileName, tableName) => {
     query = `LOAD DATA LOCAL INFILE ? INTO TABLE ${tableName} FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES;`;
   }
 
-  connection.query({
+  return connection.promise().query({
       sql: query,
       values: [pathToFile],
       infileStreamFactory: () => fs.createReadStream(pathToFile)
@@ -41,8 +41,14 @@ const loadCSV = (fileName, tableName) => {
   );
 };
 
+
+
 const initiateLoad = (csvFile, table) => {
-  loadCSV(csvFile, table);
+  loadCSV('reviews.csv', 'reviews')
+  .then(() => {
+
+  return loadCSV('characteristics.csv', 'characteristics')
+  })
 };
 
 // manually typed out the filenames and ran this module for each one, later may refactor to do all at once
@@ -50,10 +56,10 @@ const initiateLoad = (csvFile, table) => {
 initiateLoad(/*  */);
 
 // successfully loaded Nov 18th:
-  // 'reviews.csv', 'reviews'
-  // 'characteristics.csv', 'characteristics'
-  // 'characteristic_reviews.csv', 'characteristic_reviews'
-  // 'photos.csv', 'photos'
+
+
+  'characteristic_reviews.csv', 'characteristic_reviews'
+  'photos.csv', 'photos'
 
 
 // TODO:

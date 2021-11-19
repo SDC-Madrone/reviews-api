@@ -1,3 +1,5 @@
+var queryMethods = require('../database/queryMethods.js');
+
 const models = {
   getReviews: function(queryParams) {
     console.log('got this hefty boi: ', queryParams);
@@ -7,22 +9,8 @@ const models = {
     var sort = queryParams.sort || 'none';
     var product_id = queryParams.product_id;
 
-    var handleGoodRequest = (result) => {
-      return result;
-    }
 
-    // 'You send a very valid request oWo';
-    // new Error('Missing product id - GET/reviews requires the product_id query parameter');
-
-
-    var handleBadRequest = (err) => {
-      return err;
-    }
-
-    return new Promise((resolve, reject) => {
-
-    })
-
+    return queryMethods.retrive()
 
   },
 
