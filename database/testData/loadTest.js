@@ -20,13 +20,10 @@ const connection = mysql.createConnection({
 // check out connection pooling for when multiple servers need to access/query you database,
 
 
-
-
-
 const testCSV = (localTestFile) => {
   // LOAD DATA using the file name
 
-  var query = "LOAD DATA LOCAL INFILE ? INTO TABLE characteristics FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness);";
+  var query = "LOAD DATA LOCAL INFILE ? INTO TABLE reviews FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES (id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness);";
   connection.query(
     {
       sql: query,
@@ -47,15 +44,13 @@ const testCSV = (localTestFile) => {
 
 };
 
+testCSV('./reviewsTest.csv');
 
-testCSV('./characteristics.csv');
-
-// testCSV('characteristic_reviewsTest.csv', '');
+// testCSV('./characteristics.csv');
+// testCSV('characteristic_reviewsTest.csv');
+// testCSV('reviews_photos.csv');
 
 //TESTED AND DONE:
-// 'reviews_photos.csv' for photos table);
-//'./reviewsTest.csv' for reviews table
-
 
 
 
