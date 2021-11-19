@@ -11,11 +11,8 @@ const queryMethods = {
   // returns a promise
   selectReviews: function(page, count, sort, product_id) {
     // should query the database for reviews specified
-    var sqlQuery = 'SELECT * FROM reviews WHERE product_id = ? LIMIT ?;'
-    console.log('product_id: ', product_id);
-    console.log('count', count);
+    var sqlQuery = 'SELECT id, product_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness FROM reviews WHERE product_id = ? LIMIT ?;'
     return connection.promise().query(sqlQuery, [Number(product_id), Number(count)]);
-
   },
 
   add: function() {
