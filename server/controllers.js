@@ -16,12 +16,14 @@ const controllers = {
     var photosArray;
 
     models.getReviews(req.query)
-    .then(([reviewsRows, reviewsFields]) => {
+    .then(([reviewsRows, fields]) => {
+      console.log('should be the reviews', reviewsRows);
       reviewsArray = reviewsRows
       return models.getPhotos(reviewsRows);
     })
-    .then(([photosRows, photosfields]) => {
+    .then(([photosRows, fields]) => {
       photosArray = photosRows;
+      console.log('photosRows: ', photosRows);
       var respondWith = transformers.reviews(reviewsArray, photosArray, req.query);
 
       res.status(200).send(respondWith);
@@ -34,6 +36,9 @@ const controllers = {
 
 
   },
+
+
+
 
   // GET /reviews/meta
   handleGetMeta: function(req, res) {
