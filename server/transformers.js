@@ -14,10 +14,7 @@ const transformers = {
       reviewObject.recommend = reviewObject.recommend === 'true' ? true : false;
     });
 
-    var structured = {
-
-    };
-
+    var structured
     // must be in this format:
 
     // {

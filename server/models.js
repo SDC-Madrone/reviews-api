@@ -7,13 +7,17 @@ const models = {
     var sort = queryParams.sort || 'none';
     var product_id = queryParams.product_id;
 
-    return queryMethods.selectReviews(page, count, sort, product_id);
+    queryMethods.selectReviews(page, count, sort, product_id)
+      .then((rows, fields, meta) => {
+        // we have all the reviews, now need to get photos for each
+
+      }
   },
 
-  getPhotos: function(reviewsRows) {
-    var reviewIDs = reviewsRows.map(row => row.id);
-    return queryMethods.selectPhotos(reviewIDs);
-  },
+  // getPhotos: function(reviewsRows) {
+  //   var reviewIDs = reviewsRows.map(row => row.id);
+  //   return queryMethods.selectPhotos(reviewIDs);
+  // },
 
   getMeta: function(reqObject) {
 

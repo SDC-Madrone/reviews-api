@@ -11,13 +11,13 @@ const queryMethods = {
   // returns a promise
   selectReviews: function(page, count, sort, product_id) {
     // should query the database for reviews specified
-    var sqlQuery = 'SELECT id, product_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness FROM reviews WHERE product_id = ? LIMIT ?;'
+    var sqlQuery = 'SELECT id, product_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness FROM reviews WHERE product_id = ? LIMIT ?;';
     return connection.promise().query(sqlQuery, [Number(product_id), Number(count)]);
   },
 
   selectPhotos: function(reviewIDs) {
     console.log('reviewIDs: ', reviewIDs);
-    var sqlQuery = 'SELECT id, url FROM photos WHERE review_id IN (?)'
+    var sqlQuery = 'SELECT id, url FROM photos WHERE review_id IN (?)';
     return connection.promise().query(sqlQuery, [reviewIDs]);
   }
 
