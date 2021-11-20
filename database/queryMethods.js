@@ -17,7 +17,7 @@ const queryMethods = {
     // -- LEFT OFF HERE, try joining tables to get this in one query, save current operation in case joining is even slower
     // -- also look into the ARRAYAGG mysql function
 
-    var sqlQuery = 'SELECT id, product_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness FROM reviews WHERE product_id = ? LIMIT ?;';
+    var sqlQuery = 'SELECT reviews.id, product_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness, photos.id, url FROM reviews INNER JOIN photos ON reviews.id = photos.review_id WHERE reviews.product_id = ? LIMIT ?;';
     return connection.promise().query(sqlQuery, [Number(product_id), Number(count)]);
   },
 
