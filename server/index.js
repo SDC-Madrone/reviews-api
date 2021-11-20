@@ -5,6 +5,7 @@ const app = express();
 
 // define middleware
 app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 
 // routes
 app.get('/', (req, res) => {

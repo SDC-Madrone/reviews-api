@@ -12,28 +12,34 @@ const controllers = {
     // req.query.product_id = queryParams.product_id;
 
     // these should be in the same order
-    var reviewsArray;
-    var photosArray;
+    // var reviewsArray;
+    // var photosArray;
 
-    models.getReviews(req.query)
-    .then(([reviewsRows, fields]) => {
-      console.log('should be the reviews', reviewsRows);
-      reviewsArray = reviewsRows
-      return models.getPhotos(reviewsRows);
-    })
-    .then(([photosRows, fields]) => {
-      photosArray = photosRows;
-      console.log('photosRows: ', photosRows);
-      var respondWith = transformers.reviews(reviewsArray, photosArray, req.query);
 
-      res.status(200).send(respondWith);
+
+    models.getReviewsAndPhotos(req.query)
+    .then(([rows, fields]) => {
+      // console.log('should be reviews:', rows);
+      // reviewsArray = rows;
+      console.log(rows);
+
+      var responseObject = transformers.reviews(rows, req.query);
+      res.status(200).send(responseObject);
+
+
+      // return models.getPhotos(rows);
     })
+    // .then(([rows, fields]) => {
+    //   photosArray = rows[0];
+    //   console.log('should be photos: ', rows[0]);
+    //   // var respondWith = transformers.reviews(reviewsArray, photosArray, req.query);
+    //   res.status(200).send(rows);
+    // })
     .catch((err) => {
       console.log('error querying for reviews');
       res.status(404).send('Not found :(');
       throw err;
     });
-
 
   },
 
