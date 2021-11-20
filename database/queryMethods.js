@@ -15,10 +15,9 @@ const queryMethods = {
     return connection.promise().query(sqlQuery, [Number(product_id), Number(count)]);
   },
 
-  selectPhotos: function(reviewIDs) {
-    console.log('reviewIDs: ', reviewIDs);
-    var sqlQuery = 'SELECT id, url FROM photos WHERE review_id IN (?)';
-    return connection.promise().query(sqlQuery, [reviewIDs]);
+  selectPhotos: function(reviewID) {
+    var sqlQuery = 'SELECT id, url FROM photos WHERE review_id = ?';
+    return connection.promise().query(sqlQuery, [reviewID]);
   }
 
 };

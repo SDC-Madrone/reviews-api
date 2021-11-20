@@ -1,20 +1,25 @@
 
 const transformers = {
-  reviews: function(reviewsArray, photosArray) {
-    // put reviews and photos into one object to send back
-
+  // put reviews and photos into one object to send back
+  reviews: function(reviewsArray, photosArray, queryParams) {
     reviewsArray.forEach((reviewObject, i, arr) => {
       reviewObject.review_id = reviewObject.id;
       delete reviewObject.id;
-
       if (reviewObject.response === 'null') {
         reviewObject.response = null;
       }
-
       reviewObject.recommend = reviewObject.recommend === 'true' ? true : false;
+      reviewObject.photos = photosArray[i];
     });
 
-    var structured
+    return {
+      product: queryParams.product_id,
+      page: queryParams.page,
+      count: queryParams.count,
+      results: reviewsArray
+    };
+
+
     // must be in this format:
 
     // {

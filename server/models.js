@@ -2,22 +2,17 @@ var queryMethods = require('../database/queryMethods.js');
 
 const models = {
   getReviews: function(queryParams) {
-    var page = queryParams.page || 0;
-    var count = queryParams.count || 5;
-    var sort = queryParams.sort || 'none';
-    var product_id = queryParams.product_id;
-
-    queryMethods.selectReviews(page, count, sort, product_id)
-      .then((rows, fields, meta) => {
-        // we have all the reviews, now need to get photos for each
-
-      }
+    // -- left off here, need to pass queryParams and desructure in selectReviews
+    return queryMethods.selectReviews(page, count, sort, product_id);
   },
 
-  // getPhotos: function(reviewsRows) {
-  //   var reviewIDs = reviewsRows.map(row => row.id);
-  //   return queryMethods.selectPhotos(reviewIDs);
-  // },
+  getPhotos: function(reviewsToGetPhotosFor) {
+    // input is an array
+    var photoQueries = reviewsToGetPhotosFor.map(review => queryMethods.selectPhotos(review.id))
+    return Promise.all(photoQueries);
+
+    // should return a promise of an array of query results
+  },
 
   getMeta: function(reqObject) {
 

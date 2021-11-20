@@ -6,7 +6,12 @@ const controllers = {
 
   // GET /reviews
   handleGetReviews: function(req, res) {
+    req.query.page = req.query.page || 0;
+    req.query.count = req.query.count || 5;
+    req.query.sort = req.query.sort || 'none';
+    // req.query.product_id = queryParams.product_id;
 
+    // these should be in the same order
     var reviewsArray;
     var photosArray;
 
@@ -17,10 +22,9 @@ const controllers = {
     })
     .then(([photosRows, photosfields]) => {
       photosArray = photosRows;
-      var respondWith = transformers.reviews(reviewsArray, photosArray);
+      var respondWith = transformers.reviews(reviewsArray, photosArray, req.query);
 
-      res.status(200).send(reviewsArray);
-
+      res.status(200).send(respondWith);
     })
     .catch((err) => {
       console.log('error querying for reviews');
