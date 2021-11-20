@@ -3,6 +3,21 @@ const transformers = {
   reviews: function(reviewsArray, photosArray) {
     // put reviews and photos into one object to send back
 
+    reviewsArray.forEach((reviewObject, i, arr) => {
+      reviewObject.review_id = reviewObject.id;
+      delete reviewObject.id;
+
+      if (reviewObject.response === 'null') {
+        reviewObject.response = null;
+      }
+
+      reviewObject.recommend = reviewObject.recommend === 'true' ? true : false;
+    });
+
+    var structured = {
+
+    };
+
     // must be in this format:
 
     // {
@@ -11,7 +26,7 @@ const transformers = {
     //   "count": 5,
     //   "results": [
     //       {
-    //           "review_id": 1055455,
+    //           "review_id": 1055455, ///change from id
     //           "rating": 4,
     //           "summary": "I am liking these glasses",
     //           "recommend": true,

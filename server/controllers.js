@@ -1,4 +1,5 @@
 const models = require('./models.js');
+const transformers = require('./transformers.js');
 
 // handle requests
 const controllers = {
@@ -12,13 +13,13 @@ const controllers = {
     models.getReviews(req.query)
     .then(([reviewsRows, reviewsFields]) => {
       reviewsArray = reviewsRows
-      return models.getPhotos(req.query)
+      return models.getPhotos(reviewsRows);
     })
     .then(([photosRows, photosfields]) => {
       photosArray = photosRows;
-      // models.ReviewsResponse(rows);
+      var respondWith = transformers.reviews(reviewsArray, photosArray);
 
-      res.status(200).send(rows);
+      res.status(200).send(reviewsArray);
 
     })
     .catch((err) => {

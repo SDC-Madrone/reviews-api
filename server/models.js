@@ -10,6 +10,11 @@ const models = {
     return queryMethods.selectReviews(page, count, sort, product_id);
   },
 
+  getPhotos: function(reviewsRows) {
+    var reviewIDs = reviewsRows.map(row => row.id);
+    return queryMethods.selectPhotos(reviewIDs);
+  },
+
   getMeta: function(reqObject) {
 
   }
