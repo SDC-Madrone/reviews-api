@@ -21,7 +21,7 @@ const controllers = {
     .then(([rows, fields]) => {
       // console.log('should be reviews:', rows);
       // reviewsArray = rows;
-      console.log(rows);
+      // console.log(rows);
 
       var responseObject = transformers.reviews(rows, req.query);
       res.status(200).send(responseObject);

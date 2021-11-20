@@ -1,11 +1,4 @@
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'ratings_and_reviews',
-});
-
+const connection = require('./connection.js');
 
 const queryMethods = {
   // returns a promise
