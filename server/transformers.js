@@ -1,22 +1,25 @@
 
 const transformers = {
-  // put reviews and photos into one object to send back
-  reviews: function(reviewsArray, photosArray, queryParams) {
-    reviewsArray.forEach((reviewObject, i, arr) => {
-      reviewObject.review_id = reviewObject.id;
-      delete reviewObject.id;
+  // assembles the response object
+  // In: an array of query results and the req.params object
+  reviews: function(queryResults, reqQueryParams) {
+    queryResults.forEach((reviewObject, i, arr) => {
       if (reviewObject.response === 'null') {
         reviewObject.response = null;
       }
       reviewObject.recommend = reviewObject.recommend === 'true' ? true : false;
-      reviewObject.photos = photosArray[i];
+      // change to an array once you get the queries working
+      reviewObject.photos = {
+        id: reviewObject.id,
+        url: reviewObject.url
+      }
     });
 
     return {
-      product: queryParams.product_id,
-      page: queryParams.page,
-      count: queryParams.count,
-      results: reviewsArray
+      product: reqQueryParams.product_id,
+      page: reqQueryParams.page,
+      count: reqQueryParams.count,
+      results: queryResults
     };
 
 

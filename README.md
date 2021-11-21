@@ -47,7 +47,7 @@ Body parameters:
 Parameter	        Type	            Description
 product_id	      integer	          Required ID of the product to post the review for
 rating	          integer	          Integer (1-5) indicating the review rating
-summary	          text	            Summary text of the review
+summary	          text	            (optional) Summary text of the review
 body	            text	            Continued or full text of the review
 recommend	        bool	            Value indicating if the reviewer recommends the product
 name	            text	            Username for question asker
