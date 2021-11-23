@@ -30,14 +30,21 @@ USE ratings_and_reviews;
 -- select product_id from reviews where id = 10;
 -- select count(photos.id), review_id from photos where review_id = 10;
 
-select reviews.id,
+select reviews.id AS review_id, product_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness,
     (SELECT CAST(CONCAT('[', GROUP_CONCAT(JSON_OBJECT("id", id, "url", url)), ']') AS JSON)
     FROM photos WHERE review_id = reviews.id)
-AS results
+AS photos
 FROM reviews
-WHERE product_id = 4
-GROUP BY reviews.id;
+WHERE product_id = 4;
+
+
+-- GROUP BY reviews.id;
+
+
 -- discovered that product_id 4 has a reivew with more than one photo
+
+
+
 
 -- select filtered_reviews.product_id, photos.id, photos.url
 -- from photos
