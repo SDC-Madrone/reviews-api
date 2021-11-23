@@ -12,6 +12,7 @@ const controllers = {
     req.query.page = req.query.page || 0;
     req.query.count = req.query.count || 5;
     req.query.sort = req.query.sort || 'none';
+    console.log('hi from handle get')
 
     models.getReviewsAndPhotos(req.query)
     .then(([rows, fields]) => {
