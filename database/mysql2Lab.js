@@ -11,6 +11,6 @@ WHERE product_id = 4;`;
 
 
 connection.query(sqlQuery, function(err, rows, fields) {
-  console.log('result 2: ', rows);
+  console.log(rows);
   connection.end();
 });
