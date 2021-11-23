@@ -34,14 +34,16 @@ SELECT JSON_OBJECT(
     "product", product_id,
     "page", 0,
     "count", 5,
-    "results", (CONCAT('[', (select
-        reviews.id AS review_id, rating, summary, recommend,
-        response, body, date, reviewer_name, helpfulness,
-        (SELECT CAST(CONCAT('[', GROUP_CONCAT(JSON_OBJECT("id", id, "url", url)), ']') AS JSON)
-            FROM photos WHERE review_id = reviews.id)
-            AS photos), ']')
+    "results", (
+        (select
+            reviews.id AS review_id, rating, summary, recommend,
+            response, body, date, reviewer_name, helpfulness,
+            (SELECT CAST(CONCAT('[', GROUP_CONCAT(JSON_OBJECT("id", id, "url", url)), ']') AS JSON)
+                FROM photos WHERE review_id = reviews.id)
+                AS photos) AS results
 ))
 FROM reviews
+INNER JOIN results ON results.review_id = photos.review_id
 WHERE product_id = 4
 LIMIT 5;
 
