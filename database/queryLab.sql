@@ -30,24 +30,26 @@ USE ratings_and_reviews;
 -- select product_id from reviews where id = 10;
 -- select count(photos.id), review_id from photos where review_id = 10;
 
-select reviews.id, JSON_ARRAYAGG((SELECT JSON_OBJECT("id", id, "url", url) FROM photos WHERE review_id = reviews.id)) as results from reviews WHERE product_id = 4 GROUP BY reviews.id;
+select reviews.id, JSON_ARRAYAGG(
+    (SELECT CAST(CONCAT('[', GROUP_CONCAT(JSON_OBJECT("id", id, "url", url)), ']') AS JSON)
+    FROM photos WHERE review_id = reviews.id)
+) AS results
+FROM reviews
+WHERE product_id = 4
+GROUP BY reviews.id;
 -- discovered that product_id 4 has a reivew with more than one photo
 
+-- select filtered_reviews.product_id, photos.id, photos.url
+-- from photos
+-- join (
+--     -- only these columns are available in the filtered_reviews
+--     SELECT id, reviewer_name, product_id
+--     from reviews
+--     where product_id = 4
+-- ) as filtered_reviews
+-- ON photos.review_id = filtered_reviews.id;
 
 
-
-    -- (SELECT
-    --   reviews.id AS review_id,
-    --   product_id, rating,
-    --   summary, recommend,
-    --   response, body,
-    --   date, reviewer_name,
-    --   helpfulness, JSON_ARRAY(
-    --     (SELECT id, url FROM photos WHERE review_id = reviews.id)
-    --   ) AS photos
-
-    --   FROM reviews INNER JOIN photos ON reviews.id = photos.review_id
-    --     WHERE reviews.product_id = 5)
 
 
 -- {
@@ -91,3 +93,18 @@ select reviews.id, JSON_ARRAYAGG((SELECT JSON_OBJECT("id", id, "url", url) FROM 
 --     // ...
 --   ]
 -- }
+
+
+
+    -- (SELECT
+    --   reviews.id AS review_id,
+    --   product_id, rating,
+    --   summary, recommend,
+    --   response, body,
+    --   date, reviewer_name,
+    --   helpfulness, JSON_ARRAY(
+    --     (SELECT id, url FROM photos WHERE review_id = reviews.id)
+    --   ) AS photos
+
+    --   FROM reviews INNER JOIN photos ON reviews.id = photos.review_id
+    --     WHERE reviews.product_id = 5)
