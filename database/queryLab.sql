@@ -10,13 +10,14 @@ BEGIN;
     -- insert into photos values: (@reviewID_to_use, ?)
     -- insert into char_rev values: (?, @reviewID_to_use, ?);
 
-INSERT INTO reivews (product_id, rating,
+INSERT INTO reviews (product_id, rating,
     summary, recommend,
-    body,
+    body, date,
     reviewer_name, reviewer_email)
-    VALUES (902, 4,
+    VALUES (903, 5,
         '', 'true',
-        'this product rocks uWu Im dreaming about it',
+        'this product REALLY rocks uWu Im dreaming about it',
+        69,
         'elichten94', 'sdfasdf@whut.net'
     );
 
@@ -25,7 +26,7 @@ SET @reviewID_to_use = LAST_INSERT_ID();
 
 INSERT INTO photos (review_id, url)
 
-    VALUES (@reviewID_to_use, 'asdfasdfasdfasdf/werrtert.com_uWu');
+    VALUES (@reviewID_to_use, 'qwerzxcsadf.com');
 
 INSERT INTO characteristic_reviews (characteristic_id, review_id, value)
     VALUES (11, @reviewID_to_use, 4);
