@@ -23,9 +23,19 @@ const models = {
 
   postReviews: function(requestBody) {
     console.log('request body revied in models: ', requestBody);
-    // -- LEFT OFF HERE --
-    // -- look at mysql transactions and procedures, may be useful for this one
-    var sqlQuery = 'INSERT INTO reviews ...'
+
+    var sqlQuery = `BEGIN;
+      INSERT INTO reviews (product_id, rating,
+        summary, recommend,
+        body, date,
+        reviewer_name, reviewer_email)
+        VALUES (?, ?, ?, ?, ?, ?, ?);
+      SET @reviewID_to_use = LAST_INSERT_ID();
+      INSERT INTO photos (review_id, url)
+        VALUES (@reviewID_to_use, ?);
+      INSERT INTO characteristic_reviews (characteristic_id, review_id, value)
+        VALUES (?, @reviewID_to_use, ?);
+      COMMIT;`;
     connection.promise().query(sqlQuery, []);
   }
 

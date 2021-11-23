@@ -3,13 +3,12 @@
 
 USE ratings_and_reviews;
 
-BEGIN;
-
 -- use later:
     -- insert into reviews values: (?, ?, ?, ?, ?, ?, ?)
     -- insert into photos values: (@reviewID_to_use, ?)
     -- insert into char_rev values: (?, @reviewID_to_use, ?);
 
+BEGIN;
 INSERT INTO reviews (product_id, rating,
     summary, recommend,
     body, date,
@@ -20,18 +19,11 @@ INSERT INTO reviews (product_id, rating,
         69,
         'elichten94', 'sdfasdf@whut.net'
     );
-
--- might need to be "select last_insert_id()"
 SET @reviewID_to_use = LAST_INSERT_ID();
-
 INSERT INTO photos (review_id, url)
-
     VALUES (@reviewID_to_use, 'qwerzxcsadf.com');
-
 INSERT INTO characteristic_reviews (characteristic_id, review_id, value)
     VALUES (11, @reviewID_to_use, 4);
-
-
 COMMIT;
 
 
