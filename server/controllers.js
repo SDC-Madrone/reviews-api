@@ -12,9 +12,8 @@ const controllers = {
     req.query.page = req.query.page || 0;
     req.query.count = req.query.count || 5;
     req.query.sort = req.query.sort || 'none';
-    console.log('hi from handle get')
 
-    models.getReviewsAndPhotos(req.query)
+    models.getReviews(req.query)
     .then(([rows, fields]) => {
       var responseObject = transformers.reviews(rows, req.query);
       res.status(200).send(responseObject);
@@ -34,9 +33,13 @@ const controllers = {
 
   // POST /reviews
   handlePostReivews: function(req, res) {
-    res.send('hello from post reviews');
     // how do we handle bad data? The sql dbms SHOULD throw errors for trying to insert wrong values into fields
     // test this out in the shell first
+    // NOTE - seems to handle it well :)
+
+    models.postReviews(req.body)
+
+    res.send('hello from post reviews');
   }
 
 };
