@@ -1,4 +1,5 @@
 const connection = require('./connection.js');
+const { groupCharacteristics, generatePlaceholders } = require('./helpers.js');
 
 const models = {
   // returns a promise
@@ -29,15 +30,13 @@ const models = {
       product_id,
       rating,
       summary,
-      body,
       recommend,
+      body,
       name,
       email,
       photos,
       characteristics
     } = requestBody;
-
-
 
     var photoQuery = '';
     if (photos.length) {
@@ -51,18 +50,30 @@ const models = {
         VALUES ${generatePlaceholders('characteristic_reviews', characteristics)}`;
     }
 
+    var groupedValues = ([
+      product_id,
+      rating,
+      summary,
+      recommend,
+      body,
+      Date.now();
+      name,
+      email,
+      photos,
+      groupCharacteristics(characteristics)
+    ]).flat();
 
     var sqlQuery = `
       BEGIN;
       INSERT INTO reviews (product_id, rating,
         summary, recommend,
-        body, date,
+        body, ?,
         reviewer_name, reviewer_email)
-        VALUES (?, ?, ?, ?, ?, ?, ?);
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
       SET @reviewID_to_use = LAST_INSERT_ID();
         ${photoQuery}; ${characteristicsQuery};
       COMMIT;`;
-    connection.promise().query(sqlQuery, []);
+    connection.promise().query(sqlQuery, groupedValues);
   }
 };
 
