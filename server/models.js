@@ -4,16 +4,17 @@ const models = {
   // returns a promise
 
   getReviews: function({ page, count, sort, product_id }) {
-    var sqlQuery = `SELECT reviews.id AS review_id,
-                      rating, summary,
-                      recommend, response,
-                      body, date,
-                      reviewer_name, helpfulness,
-                      (SELECT CAST(CONCAT('[', GROUP_CONCAT(JSON_OBJECT("id", id, "url", url)), ']') AS JSON)
-                        FROM photos
-                        WHERE review_id = reviews.id
-                      )
-                      AS photos
+    var sqlQuery = `
+      SELECT reviews.id AS review_id,
+        rating, summary,
+        recommend, response,
+        body, date,
+        reviewer_name, helpfulness,
+        (SELECT CAST(CONCAT('[', GROUP_CONCAT(JSON_OBJECT("id", id, "url", url)), ']') AS JSON)
+          FROM photos
+          WHERE review_id = reviews.id
+        )
+        AS photos
     FROM reviews
     WHERE product_id = ?
     LIMIT ?;`;
@@ -24,7 +25,20 @@ const models = {
   postReviews: function(requestBody) {
     console.log('request body revied in models: ', requestBody);
 
-    var sqlQuery = `BEGIN;
+    var {
+      product_id,
+      rating,
+      summary,
+      body,
+      recommend,
+      name,
+      email,
+      photos,
+      characteristics
+    } = requestBody;
+
+    var sqlQuery = `
+      BEGIN;
       INSERT INTO reviews (product_id, rating,
         summary, recommend,
         body, date,
@@ -38,7 +52,6 @@ const models = {
       COMMIT;`;
     connection.promise().query(sqlQuery, []);
   }
-
 };
 
 module.exports = models;
