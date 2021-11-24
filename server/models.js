@@ -40,8 +40,7 @@ const models = {
 
     var photoQuery = '';
     if (photos.length) {
-      var photoQuery = `INSERT INTO photos (review_id, url)
-      VALUES ${generatePlaceholders('photos', photos)}`;
+      var photoQuery = `INSERT INTO photos (review_id, url) VALUES ${generatePlaceholders('photos', photos)}`;
     }
 
     var characteristicsQuery = ''
@@ -49,8 +48,7 @@ const models = {
     if (Object.keys(characteristics).length) {
       console.log('made it to parsing characteristics');
 
-      characteristicsQuery = `INSERT INTO characteristic_reviews (characteristic_id, review_id, value)
-        VALUES ${generatePlaceholders('characteristic_reviews', characteristics)}`;
+      characteristicsQuery = `INSERT INTO characteristic_reviews (characteristic_id, review_id, value) VALUES ${generatePlaceholders('characteristic_reviews', characteristics)}`;
 
         console.log('generated string: ', generatePlaceholders('characteristic_reviews', characteristics));
     }
@@ -68,19 +66,30 @@ const models = {
       characteristicsArray
     ]).flat();
 
-    console.log('grouped values: ', groupedValues);
 
-    var sqlQuery = `
-      BEGIN;
-      INSERT INTO reviews (product_id, rating,
-        summary, recommend,
-        body, date,
-        reviewer_name, reviewer_email)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-      SET @reviewID_to_use = LAST_INSERT_ID();
-        ${photoQuery}; ${characteristicsQuery};
-      COMMIT;`;
-    return connection.promise().query(sqlQuery, groupedValues);
+    var fullQuery =  `BEGIN;
+    INSERT INTO reviews (product_id, rating, summary, recommend, body, date, reviewer_name, reviewer_email)
+    VALUES (69, 2, 'omg I do not love this prod', false, 'asdfasdf', 1637713985008, 'ellio1994', 'asdfasdf@sdfsf.net');
+
+    SET @reviewID_to_use = LAST_INSERT_ID();
+    INSERT INTO photos (review_id, url)
+    VALUES (@reviewID_to_use, 'sdafsdf'), (@reviewID_to_use, 'rtyerteyr');
+    INSERT INTO characteristic_reviews (characteristic_id, review_id, value)
+    VALUES ('2', @reviewID_to_use, 4), ('7', @reviewID_to_use, 2);
+    COMMIT;`;
+
+    // console.log('grouped values: ', groupedValues);
+
+    var sqlQuery = `INSERT INTO reviews (product_id, rating, summary, recommend, body, date, reviewer_name, reviewer_email) VALUES (?, ?, ?, ?, ?, ?, ?, ?); SET @reviewID_to_use = LAST_INSERT_ID(); ${photoQuery}; ${characteristicsQuery};`;
+
+
+    return connection.promise().query('START TRANSACTION')
+      .then(() => {
+        return connection.promise().query(sqlQuery, groupedValues);
+      })
+      .then(() => {
+        return connection.promise().query('COMMIT');
+      });
   }
 };
 
