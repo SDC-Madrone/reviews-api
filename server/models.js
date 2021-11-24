@@ -4,6 +4,23 @@ const { groupCharacteristics, generatePlaceholders } = require('./helpers.js');
 const models = {
 
   getReviews: function({ page, count, sort, product_id }) {
+    var sortBy;
+    switch (sort) {
+      case "newest":
+        sortBy = 'date';
+        break;
+      case "helpful":
+        sortBy = 'helpfulness';
+        break;
+      case "relevant":
+        sortBy = 'date'; // later balance by helpfulness
+        break;
+      default:
+        sortBy = 'date'; // later balance by helpfulness
+    }
+
+    console.log('sortBy: ', sortBy);
+
     var sqlQuery = `
       SELECT reviews.id AS review_id,
         rating, summary,
@@ -17,9 +34,22 @@ const models = {
         AS photos
     FROM reviews
     WHERE product_id = ?
+    ORDER BY ${sortBy} DESC
     LIMIT ?;`;
 
     return pool.query(sqlQuery, [Number(product_id), Number(count)]);
+  },
+
+  getMeta: function(product_id) {
+    // should query for metadata given a product id
+    return new Promise((resolve, reject) => {
+      var x = 5;
+      if (x > 1) {
+        resolve('hey');
+      } else {
+        reject('boooo');
+      }
+    })
   },
 
   postReviews: function(requestBody) {

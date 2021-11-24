@@ -19,16 +19,22 @@ const controllers = {
       res.status(200).send(responseObject);
     })
     .catch((err) => {
-      console.log('error querying for reviews');
-      res.status(404).send('Not found :(');
-      throw err;
+      console.log('error querying for reviews', err);
+      res.status(404).send(err);
     });
   },
 
-
   // GET /reviews/meta
   handleGetMeta: function(req, res) {
-    res.send('hello from getMeta');
+    models.getMeta(req.product_id)
+    .then((rows) => {
+      res.status(200).send(rows);
+    })
+    .catch((err) => {
+      console.log('error getting metadata');
+      res.status(400).send(err);
+    });
+
   },
 
   // POST /reviews
