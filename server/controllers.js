@@ -24,19 +24,6 @@ const controllers = {
     });
   },
 
-  // GET /reviews/meta
-  handleGetMeta: function(req, res) {
-    models.getMeta(req.product_id)
-    .then((rows) => {
-      res.status(200).send(rows);
-    })
-    .catch((err) => {
-      console.log('error getting metadata');
-      res.status(400).send(err);
-    });
-
-  },
-
   // POST /reviews
   handlePostReivews: function(req, res) {
     // how do we handle bad data? The sql dbms SHOULD throw errors for trying to insert wrong values into fields

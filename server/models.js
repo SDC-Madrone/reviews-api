@@ -40,18 +40,6 @@ const models = {
     return pool.query(sqlQuery, [Number(product_id), Number(count)]);
   },
 
-  getMeta: function(product_id) {
-    // should query for metadata given a product id
-    return new Promise((resolve, reject) => {
-      var x = 5;
-      if (x > 1) {
-        resolve('hey');
-      } else {
-        reject('boooo');
-      }
-    })
-  },
-
   postReviews: function(requestBody) {
     var {
       product_id,
