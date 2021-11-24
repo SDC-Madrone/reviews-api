@@ -34,20 +34,19 @@ const controllers = {
   // POST /reviews
   handlePostReivews: function(req, res) {
     // how do we handle bad data? The sql dbms SHOULD throw errors for trying to insert wrong values into fields
-    // test this out in the shell first
+    // test this out in the shell first, then jest suites
     // NOTE - seems to handle it well :)
 
     models.postReviews(req.body)
       .then(() => {
+        console.log('Added review to database')
         res.status(201).send('Added review!');
       })
       .catch((err) => {
         console.log('error logging reviews', err);
         res.status(400).send(err);
       })
-
   }
-
 };
 
 module.exports = controllers;
