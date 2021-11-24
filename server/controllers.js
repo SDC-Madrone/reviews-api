@@ -42,7 +42,7 @@ const controllers = {
         res.status(201).send('Added review!');
       })
       .catch((err) => {
-        console.log('error logging reviews');
+        console.log('error logging reviews', err);
         res.status(400).send(err);
       })
 
