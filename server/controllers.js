@@ -38,8 +38,14 @@ const controllers = {
     // NOTE - seems to handle it well :)
 
     models.postReviews(req.body)
+      .then(() => {
+        res.status(201).send('Added review!');
+      })
+      .catch((err) => {
+        console.log('error logging reviews');
+        res.status(400).send(err);
+      })
 
-    res.send('hello from post reviews');
   }
 
 };

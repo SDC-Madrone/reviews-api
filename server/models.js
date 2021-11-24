@@ -45,9 +45,14 @@ const models = {
     }
 
     var characteristicsQuery = ''
+    var characteristicsArray = groupCharacteristics(characteristics);
     if (Object.keys(characteristics).length) {
+      console.log('made it to parsing characteristics');
+
       characteristicsQuery = `INSERT INTO characteristic_reviews (characteristic_id, review_id, value)
         VALUES ${generatePlaceholders('characteristic_reviews', characteristics)}`;
+
+        console.log('generated string: ', generatePlaceholders('characteristic_reviews', characteristics));
     }
 
     var groupedValues = ([
@@ -56,24 +61,26 @@ const models = {
       summary,
       recommend,
       body,
-      Date.now();
+      Date.now(),
       name,
       email,
       photos,
-      groupCharacteristics(characteristics)
+      characteristicsArray
     ]).flat();
+
+    console.log('grouped values: ', groupedValues);
 
     var sqlQuery = `
       BEGIN;
       INSERT INTO reviews (product_id, rating,
         summary, recommend,
-        body, ?,
+        body, date,
         reviewer_name, reviewer_email)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
       SET @reviewID_to_use = LAST_INSERT_ID();
         ${photoQuery}; ${characteristicsQuery};
       COMMIT;`;
-    connection.promise().query(sqlQuery, groupedValues);
+    return connection.promise().query(sqlQuery, groupedValues);
   }
 };
 

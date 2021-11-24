@@ -15,6 +15,7 @@ module.exports = {
         placeholder = '(@reviewID_to_use, ?)';
         break;
       case 'characteristic_reviews':
+        collection = Object.keys(collection);
         placeholder = '(?, @reviewID_to_use, ?)';
     }
 
@@ -29,4 +30,6 @@ module.exports = {
 
     return placeholders;
   }
+
+
 };
