@@ -11,7 +11,9 @@ CREATE TABLE IF NOT EXISTS reviews (
   recommend VARCHAR(5) NOT NULL, -- using varchar to avoid 1/0 t/f (false)
   response VARCHAR(1000) DEFAULT NULL,
   body VARCHAR(1000) NOT NULL,
-  date BIGINT NOT NULL, -- NOTE: when inserting from the driver, use Date.now()
+  date DATETIME NOT NULL, -- NOTE: when inserting from the driver, use Date.now()
+  -- NOTE ^ CHANGED, still need to reload data!
+    -- change the given big int with DATE_FORMAT(FROM_UNIXTIME(<some_bigint_in_your_csv>), '%Y-%m-%dT%T.000Z');
   reviewer_name VARCHAR(60) NOT NULL,
   helpfulness INT DEFAULT 0,
 
