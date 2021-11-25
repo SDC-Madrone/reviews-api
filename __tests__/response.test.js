@@ -101,7 +101,6 @@ describe('tests for POST reviews', function() {
   // });
 
 
-
   // test('should add review metadata to the "characteristic_reviews" table in database', async function() {
   //   sampleBody.product_id++;
   //   await request
