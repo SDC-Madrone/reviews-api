@@ -12,6 +12,9 @@ CREATE TABLE IF NOT EXISTS reviews (
   response VARCHAR(1000) DEFAULT NULL,
   body VARCHAR(1000) NOT NULL,
   date BIGINT NOT NULL, -- NOTE: when inserting from the driver, use Date.now()
+  -- TODO: Change to a DATETIME format, reload the dataset
+    -- when reloading, preprocess the given unixtimestamp in csv with DATE_FORMAT(FROM_UNIXTIME(<given_int_in_your_csv>), '%Y-%m-%dT%T.000Z');
+      -- OR keep schema how it is for reload and then change the column datatype after loading
   reviewer_name VARCHAR(60) NOT NULL,
   helpfulness INT DEFAULT 0,
 
@@ -61,3 +64,16 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
   FOREIGN KEY (review_id)
     REFERENCES reviews(id)
 );
+
+-- index logistics:
+  -- what columns are we searching?
+  -- what criteria are we sorting by
+  -- what columns are we instering into? avoid indexes where possible
+
+-- indexes to create:
+  -- reviews.product_id
+  -- reviews.date
+
+
+-- indexes created:
+  --

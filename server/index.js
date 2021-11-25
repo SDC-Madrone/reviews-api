@@ -13,12 +13,10 @@ app.get('/', (req, res) => {
 
 app.get('/reviews', controllers.handleGetReviews);
 
-app.get('/reviews/meta', controllers.handleGetMeta);
-
 app.post('/reviews', controllers.handlePostReivews);
 
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`listening on port ${PORT}`);
+// });
 
 module.exports = app;

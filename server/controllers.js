@@ -1,5 +1,6 @@
 const models = require('./models.js');
 const transformers = require('./transformers.js');
+const { isValidRequest } = require('./validateRequest.js');
 // handle requests
 const controllers = {
 
@@ -13,31 +14,37 @@ const controllers = {
     req.query.count = req.query.count || 5;
     req.query.sort = req.query.sort || 'none';
 
-    models.getReviewsAndPhotos(req.query)
+    models.getReviews(req.query)
     .then(([rows, fields]) => {
       var responseObject = transformers.reviews(rows, req.query);
       res.status(200).send(responseObject);
     })
     .catch((err) => {
-      console.log('error querying for reviews');
-      res.status(404).send('Not found :(');
-      throw err;
+      console.log('error querying for reviews', err);
+      res.status(404).send(err);
     });
-  },
-
-
-  // GET /reviews/meta
-  handleGetMeta: function(req, res) {
-    res.send('hello from getMeta');
   },
 
   // POST /reviews
   handlePostReivews: function(req, res) {
-    res.send('hello from post reviews');
     // how do we handle bad data? The sql dbms SHOULD throw errors for trying to insert wrong values into fields
-    // test this out in the shell first
-  }
+    // test this out in the shell first, then jest suites
+    // NOTE - seems to handle it well :)
+    if (!isValidRequest(req.body)) {
+      res.status(400).send('Bad request');
+      return;
+    }
 
+    models.postReviews(req.body)
+      .then(() => {
+        console.log('Added review to database')
+        res.status(201).send('Added review!');
+      })
+      .catch((err) => {
+        console.log('error logging reviews', err);
+        res.status(400).send(err);
+      })
+  }
 };
 
 module.exports = controllers;
