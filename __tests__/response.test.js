@@ -83,6 +83,23 @@ describe('tests for POST reviews', function() {
     pool.end();
   });
 
+  test('sending an incomplete request body should return a status code 400', async function () {
+    var incompleteBody = {
+      "product_id": 9002,
+      "summary": "this is a bad request",
+      "recommend": false,
+      "name": "tom_tomato94",
+    };
+
+    const response = await request(app).post('/reviews')
+      .send(incompleteBody);
+    expect(response.statusCode).toBe(400);
+  });
+
+  // test('failed writes should maintain ACID protocol', function() {
+  //   // give complete request with null/wrong-type fields
+  // });
+
 
 
   // test('should add review metadata to the "characteristic_reviews" table in database', async function() {

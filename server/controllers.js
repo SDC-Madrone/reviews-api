@@ -1,5 +1,6 @@
 const models = require('./models.js');
 const transformers = require('./transformers.js');
+const { isValidRequest } = require('./validateRequest.js');
 // handle requests
 const controllers = {
 
@@ -29,6 +30,10 @@ const controllers = {
     // how do we handle bad data? The sql dbms SHOULD throw errors for trying to insert wrong values into fields
     // test this out in the shell first, then jest suites
     // NOTE - seems to handle it well :)
+    if (!isValidRequest(req.body)) {
+      res.status(400).send('Bad request');
+      return;
+    }
 
     models.postReviews(req.body)
       .then(() => {
