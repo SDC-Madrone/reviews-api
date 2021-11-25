@@ -8,8 +8,8 @@ export const options = {
 };
 
 export default function () {
-  const getUrl = `http://localhost:3000/reviews/?page=${0}&count=${5}&sort=${'newest'}&product_id=${750}`;
-  const postUrl = 'http://localhost:3000/reviews/';
+  const GET_URL = `http://localhost:3000/reviews/?page=${0}&count=${5}&sort=${'newest'}&product_id=${750}`;
+  const POST_URL = 'http://localhost:3000/reviews/';
 
   // todo: generate input with math.random for the characteristics and photos
 
@@ -31,7 +31,8 @@ export default function () {
     },
   };
 
-  http.post(postUrl, body, params);
+  http.post(POST_URL, body, params);
+  // http.get(GET_URL);
   sleep(1);
 };
 
