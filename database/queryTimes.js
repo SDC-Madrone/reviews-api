@@ -3,8 +3,8 @@ const pool = require('../server/connection.js');
 const request = require('supertest');
 
 // increment 5 each test
-const GET_PRODUCT_ID = 5197467;
-const POST_PRODUCT_ID = 70;
+const GET_PRODUCT_ID = 5197477;
+const POST_PRODUCT_ID = 77;
 
 const SORT_BY = 'helpful';
 const COUNT = 5;
