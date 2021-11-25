@@ -80,7 +80,7 @@ describe('tests for POST reviews', function() {
     const mostRecentReview = response.body.results[0];
     expect(mostRecentReview.summary).toBe('Great hat');
     expect(mostRecentReview.reviewer_name).toBe('tom_tomato94');
-    pool.end();
+
   });
 
   test('sending an incomplete request body should return a status code 400', async function () {
@@ -96,9 +96,35 @@ describe('tests for POST reviews', function() {
     expect(response.statusCode).toBe(400);
   });
 
-  // test('failed writes should maintain ACID protocol', function() {
-  //   // give complete request with null/wrong-type fields
-  // });
+  test('failed writes should maintain ACID protocol', async function() {
+    // give complete request with null/wrong-type fields
+    var badlyTypedBody = {
+      "product_id": 600,
+      "rating": 4,
+      "summary": "This shouln not show up in the database",
+      "body": "This is a faulty request",
+      "recommend": false,
+      "name": "hacker94",
+      "email": "badactivity@bad.net",
+      "photos": [
+          null,
+          null
+      ],
+      "characteristics": {"5": 10, "9": null, "27": -4}
+    }
+
+    await request(app).post('/reviews')
+      .send(badlyTypedBody);
+
+    setTimeout(async function () {
+      const response = await request(app).get(`/reviews/?page=0&count=5&sort=newest&product_id=${600}`);
+      var reviewNames = response.body.results.map(review => review.reviewer_name);
+      console.log('results:', response.body.results);
+      expect(reviewNames).not.toContain('hacker94');
+      pool.end();
+    }, 5000)
+
+  });
 
 
   // test('should add review metadata to the "characteristic_reviews" table in database', async function() {
