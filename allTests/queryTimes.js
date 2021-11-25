@@ -49,7 +49,7 @@ const testGet = () => {
     .then(() => {
       var getEndTime = Date.now();
       var avg = ((getEndTime - getStartTime) / 1000) / 5;
-      console.log(`average request time: ${avg}`);
+      console.log(`average GET request time: ${avg}`);
       testPost();
     })
     .catch((err) => {
@@ -92,7 +92,7 @@ const testPost = () => {
       .then(() => {
         var postEndTime = Date.now();
         var avg = ((postEndTime - postStartTime) / 1000) / 5;
-        console.log(`average request time: ${avg}`);
+        console.log(`average POST request time: ${avg}`);
         pool.end();
       }).catch((err) => {
         console.log('error testing POST ');

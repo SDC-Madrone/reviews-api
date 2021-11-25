@@ -39,7 +39,6 @@ const controllers = {
       res.status(400).send('Bad request');
       return;
     }
-    console.log('request body: ', req.body);
 
     models.postReviews(req.body)
       .then(() => {

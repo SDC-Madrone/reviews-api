@@ -101,7 +101,7 @@ describe('tests for POST reviews', function() {
     var badlyTypedBody = {
       "product_id": 600,
       "rating": 4,
-      "summary": "This shouln not show up in the database",
+      "summary": "This should not show up in the database",
       "body": "This is a faulty request",
       "recommend": false,
       "name": "hacker94",
@@ -115,14 +115,11 @@ describe('tests for POST reviews', function() {
 
     await request(app).post('/reviews')
       .send(badlyTypedBody);
-
-    setTimeout(async function () {
-      const response = await request(app).get(`/reviews/?page=0&count=5&sort=newest&product_id=${600}`);
-      var reviewNames = response.body.results.map(review => review.reviewer_name);
-      console.log('results:', response.body.results);
-      expect(reviewNames).not.toContain('hacker94');
-      pool.end();
-    }, 5000)
+    const response = await request(app).get(`/reviews/?page=0&count=5&sort=newest&product_id=${600}`);
+    var reviewNames = response.body.results.map(review => review.reviewer_name);
+    // console.log('results:', response.body.results);
+    expect(reviewNames).not.toContain('hacker94');
+    pool.end();
 
   });
 
