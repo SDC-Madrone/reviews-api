@@ -7,9 +7,9 @@ const Stage = function(duration, target) {
 };
 
 const Progression = function(warmUpVUS, peakVUS, coolDownVUS) {
-  const warmUpTime = 15;
-  const peakTime = 30;
-  const coolDownTime = 15;
+  const warmUpTime = 10;
+  const peakTime = 10;
+  const coolDownTime = 2;
 
   return [
     new Stage(warmUpTime, warmUpVUS),
@@ -33,7 +33,7 @@ var body = JSON.stringify({
 
 
 export const options = {
-  stages: Progression(10, 100, 10)
+  stages: Progression(10, 500, 10)
 };
 
 export default function () {
@@ -49,8 +49,10 @@ export default function () {
     },
   };
 
+  console.log(`VU-id: ${__VU}  -  Iteration: ${__ITER}`);
+
   // http.post(POST_URL, body, params);
-  var response = http.get(GET_URL);
+  var response = http.get(`http://localhost:3000/reviews/?page=${0}&count=${5}&sort=${'newest'}&product_id=${Math.floor(Math.random() * 5000000)}`);
   check(response, {
     'status was 200?:': (r) => r.status === 200
   });
