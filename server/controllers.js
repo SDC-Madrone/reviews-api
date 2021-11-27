@@ -19,11 +19,11 @@ const controllers = {
     models.getReviews(req.query)
     .then(([rows, fields]) => {
       var responseObject = transformers.reviews(rows, req.query);
-      console.log(`GET | res 200`);
+      console.log(`GET | product_id: ${req.query.product_id} | res 200`);
       res.status(200).send(responseObject);
     })
     .catch((err) => {
-      console.log(`GET | res 404`);
+      console.log(`GET | product_id: ${req.query.product_id} | res 404`);
       console.log('error querying for reviews', err);
       res.status(404).send(err);
     });
