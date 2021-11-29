@@ -92,6 +92,11 @@ const models = {
       COMMIT;`;
 
     return pool.query(sqlQuery, groupedValues);
+  },
+
+  testRequest: function() {
+    var sqlQuery = `SELECT reviewer_name, reviewer_email FROM reviews WHERE id = 55`;
+    return pool.query()
   }
 };
 

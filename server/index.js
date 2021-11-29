@@ -1,7 +1,7 @@
 const express = require('express');
 const controllers = require('./controllers.js')
 const app = express();
-const PORT = 3000;
+const PORT = 4000;
 
 // define middleware
 app.use(express.json());
@@ -10,6 +10,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.status(200).send('This endpoint won\'t serve anything useful. Please specify /reviews or /reviews/meta in your path');
 })
+
+app.get('/dockerTests', controllers.testDocker);
 
 app.get('/reviews', controllers.handleGetReviews);
 

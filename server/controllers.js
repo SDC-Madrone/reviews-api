@@ -49,8 +49,21 @@ const controllers = {
         console.log('POST | res 400');
         console.log('error logging reviews', err);
         res.status(400).send(err);
+      });
+  },
+
+  testDocker: function(req, res) {
+    models.testRequest()
+      .then(([rows, fields]) => {
+        console.log('got this row bro: ', rows)
+        res.status(200).send(rows);
       })
+      .catch((err) => {
+        console.log('error testing docker', err);
+        res.status(404).send(err);
+      });
   }
+
 };
 
 module.exports = controllers;

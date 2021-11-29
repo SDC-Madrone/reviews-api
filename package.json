@@ -2,7 +2,7 @@
   "name": "sdc-reviews",
   "version": "1.0.0",
   "description": "reivews-api for Atelier retail",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "jest",
     "start": "nodemon ./server/index.js"
@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15"
   },
   "jest": {
     "testEnvironment": "node"

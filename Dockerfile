@@ -1,11 +1,13 @@
-FROM node:14.17.4
+FROM node:latest
 
-WORKDIR /Madrone
+WORKDIR /sdc_reviews_api
 
-COPY package.json /Madrone/package.json
+COPY package.json /sdc_reviews_api
 
 RUN npm install
 
-COPY . /Madrone
+COPY . /sdc_reviews_api
 
-CMD [ "echo", "Hi Elliot! - container created :)" ]
+EXPOSE 4000
+
+CMD ["npm", "start"]
