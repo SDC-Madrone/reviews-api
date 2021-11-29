@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const mysql = require('mysql2');
+// const mysql = require('mysql2');
 // const baseDirectory = '/Users/elliotlichtenberg/Desktop/'
 const baseDirectory = '../csvData/';
 
@@ -24,7 +24,7 @@ const loadCSV = (fileName, tableName) => {
     query = `LOAD DATA LOCAL INFILE ? INTO TABLE ${tableName} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 LINES;`;
   }
 
-  return connection.promise().query({
+  return connection.query({
       sql: query,
       values: [pathToFile],
       infileStreamFactory: () => fs.createReadStream(pathToFile)

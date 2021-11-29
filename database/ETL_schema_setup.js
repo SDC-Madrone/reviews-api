@@ -55,7 +55,11 @@ const prepareSchema = () => {
 
     pool.query(initSchema)
       .then(() => {
-        console.log('schema loaded');
+        console.log('Schema loaded!');
       })
+      .catch((err) => {
+        console.log('Schema error');
+        throw err;
+      });
 
-};
+}();
