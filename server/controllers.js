@@ -7,7 +7,9 @@ const controllers = {
   // GET /reviews
   handleGetReviews: function(req, res) {
     if (req.query.product_id === undefined) {
+      console.log(`GET | res 400`);
       res.status(400).send('Bad request: Need query parameter "product_id"');
+      return;
     }
 
     req.query.page = req.query.page || 0;
@@ -17,9 +19,11 @@ const controllers = {
     models.getReviews(req.query)
     .then(([rows, fields]) => {
       var responseObject = transformers.reviews(rows, req.query);
+      console.log(`GET | product_id: ${req.query.product_id} | res 200`);
       res.status(200).send(responseObject);
     })
     .catch((err) => {
+      console.log(`GET | product_id: ${req.query.product_id} | res 404`);
       console.log('error querying for reviews', err);
       res.status(404).send(err);
     });
@@ -31,20 +35,35 @@ const controllers = {
     // test this out in the shell first, then jest suites
     // NOTE - seems to handle it well :)
     if (!isValidRequest(req.body)) {
+      console.log('POST | res 400');
       res.status(400).send('Bad request');
       return;
     }
 
     models.postReviews(req.body)
       .then(() => {
-        console.log('Added review to database')
+        console.log('POST | res 201 (added to database)');
         res.status(201).send('Added review!');
       })
       .catch((err) => {
+        console.log('POST | res 400');
         console.log('error logging reviews', err);
         res.status(400).send(err);
+      });
+  },
+
+  testDocker: function(req, res) {
+    models.testRequest()
+      .then(([rows, fields]) => {
+        console.log('got this row bro: ', rows)
+        res.status(200).send(rows);
       })
+      .catch((err) => {
+        console.log('error testing docker', err);
+        res.status(404).send(err);
+      });
   }
+
 };
 
 module.exports = controllers;

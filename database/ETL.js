@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2');
-const baseDirectory = '/Users/elliotlichtenberg/Desktop/'
+// const baseDirectory = '/Users/elliotlichtenberg/Desktop/'
+const baseDirectory = '../csvData/';
+
 const connectionOptions = {
-  host: 'localhost',
+  host: 'reviews_database',
   user: 'root',
   password: '',
   database: 'ratings_and_reviews',

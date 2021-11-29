@@ -11,29 +11,31 @@ var sampleParams = {
 
 describe('tests for GET /reviews',  function() {
   var { product_id, count, sort, page } = sampleParams;
+  const GET_URL = `/reviews/?page=${page}&count=${count}&sort=${sort}&product_id=${product_id}`;
+
   test('should respond with a 200 status code', async function() {
-    const response = await request(app).get(`/reviews/?page=${page}&count=${count}&sort=${sort}&product_id=${product_id}`);
+    const response = await request(app).get(GET_URL);
     expect(response.statusCode).toBe(200);
   });
 
   test('should respond with a json object', async function() {
-    const response = await request(app).get(`/reviews/?page=${page}&count=${count}&sort=${sort}&product_id=${product_id}`);
+    const response = await request(app).get(GET_URL);
     expect(response.headers['content-type']).toBe('application/json; charset=utf-8')
   });
 
   test('response object should have a field for "product" that matches the query parameter for product_id', async function(){
-    var product_id = '7';
-    const response = await request(app).get(`/reviews/?page=${page}&count=${count}&sort=${sort}&product_id=${product_id}`);
-    expect(response.body.product).toBe(product_id);
+    var custom_product_id = '7';
+    const response = await request(app).get(`/reviews/?page=${page}&count=${count}&sort=${sort}&product_id=${custom_product_id}`);
+    expect(response.body.product).toBe(custom_product_id);
   });
 
   test('response object should have a results array', async function() {
-    const response = await request(app).get(`/reviews/?page=${page}&count=${count}&sort=${sort}&product_id=${product_id}`);
+    const response = await request(app).get(GET_URL);
     expect(Array.isArray(response.body.results)).toBe(true);
   });
 
   test('results array should contain review objects with the appropriate fields', async function() {
-    const response = await request(app).get(`/reviews/?page=${page}&count=${count}&sort=${sort}&product_id=${product_id}`);
+    const response = await request(app).get(GET_URL);
     const firstReview = response.body.results[0];
     expect(typeof firstReview.review_id).toBe('number');
     expect(typeof firstReview.recommend).toBe('boolean');
@@ -101,7 +103,7 @@ describe('tests for POST reviews', function() {
     var badlyTypedBody = {
       "product_id": 600,
       "rating": 4,
-      "summary": "This shouln not show up in the database",
+      "summary": "This should not show up in the database",
       "body": "This is a faulty request",
       "recommend": false,
       "name": "hacker94",
@@ -115,14 +117,11 @@ describe('tests for POST reviews', function() {
 
     await request(app).post('/reviews')
       .send(badlyTypedBody);
-
-    setTimeout(async function () {
-      const response = await request(app).get(`/reviews/?page=0&count=5&sort=newest&product_id=${600}`);
-      var reviewNames = response.body.results.map(review => review.reviewer_name);
-      console.log('results:', response.body.results);
-      expect(reviewNames).not.toContain('hacker94');
-      pool.end();
-    }, 5000)
+    const response = await request(app).get(`/reviews/?page=0&count=5&sort=newest&product_id=${600}`);
+    var reviewNames = response.body.results.map(review => review.reviewer_name);
+    // console.log('results:', response.body.results);
+    expect(reviewNames).not.toContain('hacker94');
+    pool.end();
 
   });
 

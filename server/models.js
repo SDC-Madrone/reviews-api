@@ -19,8 +19,6 @@ const models = {
         sortBy = 'date'; // later balance by helpfulness
     }
 
-    console.log('sortBy: ', sortBy);
-
     var sqlQuery = `
       SELECT reviews.id AS review_id,
         rating, summary,
@@ -56,14 +54,14 @@ const models = {
     var photoQuery = '';
     if (photos.length) {
       var photoQuery = `INSERT INTO photos (review_id, url)
-        VALUES ${generatePlaceholders('photos', photos)}`;
+        VALUES ${generatePlaceholders('photos', photos)};`;
     }
 
     var characteristicsQuery = ''
     var characteristicsArray = groupCharacteristics(characteristics);
     if (Object.keys(characteristics).length) {
       characteristicsQuery = `INSERT INTO characteristic_reviews (characteristic_id, review_id, value)
-        VALUES ${generatePlaceholders('characteristic_reviews', characteristics)}`;
+        VALUES ${generatePlaceholders('characteristic_reviews', characteristics)};`;
     }
 
     var groupedValues = ([
@@ -89,11 +87,16 @@ const models = {
         reviewer_email)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?);
       SET @reviewID_to_use = LAST_INSERT_ID();
-      ${photoQuery};
-      ${characteristicsQuery};
+      ${photoQuery}
+      ${characteristicsQuery}
       COMMIT;`;
 
     return pool.query(sqlQuery, groupedValues);
+  },
+
+  testRequest: function() {
+    var sqlQuery = `SELECT * FROM genera;`;
+    return pool.query(sqlQuery);
   }
 };
 
