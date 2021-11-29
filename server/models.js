@@ -95,8 +95,8 @@ const models = {
   },
 
   testRequest: function() {
-    var sqlQuery = `SELECT reviewer_name, reviewer_email FROM reviews WHERE id = 55`;
-    return pool.query()
+    var sqlQuery = `SELECT * FROM genera;`;
+    return pool.query(sqlQuery);
   }
 };
 
