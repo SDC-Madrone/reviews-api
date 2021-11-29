@@ -6,6 +6,7 @@ module.exports = mysql.createPool({
   host: 'reviews_database',
   user: 'root',
   password: '',
-  database: 'mushrooms',
+  database: 'ratings_and_reviews',
+  flags: ['+LOCAL_FILES']
   multipleStatements: true
 });

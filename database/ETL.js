@@ -1,16 +1,18 @@
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2');
-const baseDirectory = '/Users/elliotlichtenberg/Desktop/'
-const connectionOptions = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'ratings_and_reviews',
-  flags: ['+LOCAL_FILES']
-};
+// const baseDirectory = '/Users/elliotlichtenberg/Desktop/'
+const baseDirectory = '../csvData/';
 
-const connection = mysql.createConnection(connectionOptions);
+// const connectionOptions = {
+//   host: 'reviews_database',
+//   user: 'root',
+//   password: '',
+//   database: 'ratings_and_reviews',
+//   flags: ['+LOCAL_FILES']
+// };
+
+const connection = require('../server/connection.js');
 
 const loadCSV = (fileName, tableName) => {
 
