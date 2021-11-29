@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const mysql = require('mysql2');
-// const baseDirectory = '/Users/elliotlichtenberg/Desktop/'
-const baseDirectory = '../csvData/';
+const baseDirectory = '/Users/elliotlichtenberg/Desktop/'
+// const baseDirectory = '../csvData/';
 
 const connectionOptions = {
-  host: 'reviews_database',
+  // host: 'reviews_database', // (docker)
+  host: 'localhost',
   user: 'root',
   password: '',
   database: 'ratings_and_reviews',
