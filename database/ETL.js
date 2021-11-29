@@ -1,18 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-// const mysql = require('mysql2');
+const mysql = require('mysql2');
 // const baseDirectory = '/Users/elliotlichtenberg/Desktop/'
 const baseDirectory = '../csvData/';
 
-// const connectionOptions = {
-//   host: 'reviews_database',
-//   user: 'root',
-//   password: '',
-//   database: 'ratings_and_reviews',
-//   flags: ['+LOCAL_FILES']
-// };
+const connectionOptions = {
+  host: 'reviews_database',
+  user: 'root',
+  password: '',
+  database: 'ratings_and_reviews',
+  flags: ['+LOCAL_FILES']
+};
 
-const connection = require('../server/connection.js');
+const connection = mysql.createConnection(connectionOptions);
 
 const loadCSV = (fileName, tableName) => {
 
@@ -24,7 +24,7 @@ const loadCSV = (fileName, tableName) => {
     query = `LOAD DATA LOCAL INFILE ? INTO TABLE ${tableName} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 LINES;`;
   }
 
-  return connection.query({
+  return connection.promise().query({
       sql: query,
       values: [pathToFile],
       infileStreamFactory: () => fs.createReadStream(pathToFile)

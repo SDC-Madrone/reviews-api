@@ -62,4 +62,6 @@ const prepareSchema = () => {
         throw err;
       });
 
-}();
+};
+
+prepareSchema();
