@@ -52,7 +52,7 @@ export default function () {
   console.log(`VU-id: ${__VU}  -  Iteration: ${__ITER}`);
 
   // http.post(POST_URL, body, params);
-  var response = http.get(`http://localhost:3000/reviews/?page=${0}&count=${5}&sort=${'newest'}&product_id=${Math.floor(Math.random() * 5000000)}`);
+  var response = http.get(`http://localhost:3000/reviews/?page=${0}&count=${5}&sort=${'newest'}&product_id=${Math.floor(Math.random() * 1000000)}`);
   check(response, {
     'status was 200?:': (r) => r.status === 200
   });
