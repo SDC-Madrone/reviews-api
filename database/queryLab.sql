@@ -1,4 +1,3 @@
-
 -- product_id 4 has a reivew with more than one photo
 -- product id 27857 has 25 reviews
 
@@ -20,7 +19,6 @@
 
 USE ratings_and_reviews;
 
-EXPLAIN ANALYZE FORMAT = TREE
       SELECT
         reviews.id AS review_id,
         rating, summary,
@@ -35,4 +33,4 @@ EXPLAIN ANALYZE FORMAT = TREE
     FROM reviews
     WHERE product_id = 49320
     ORDER BY date DESC
-    LIMIT 10;
+    LIMIT 5;

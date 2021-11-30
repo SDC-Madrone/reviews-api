@@ -3,22 +3,21 @@ const { groupCharacteristics, generatePlaceholders } = require('./helpers.js');
 
 const models = {
 
-
-
   getReviews: function({ page, count, sort, product_id }) {
+
     var sortBy;
     switch (sort) {
       case "newest":
-        sortBy = 'date';
+        sortBy = 'ORDER BY date DESC';
         break;
       case "helpful":
-        sortBy = 'helpfulness';
+        sortBy = 'ORDER BY helpfulness DESC';
         break;
       case "relevant":
-        sortBy = 'date'; // later balance by helpfulness
+        sortBy = 'ORDER BY date DESC'; // later balance by helpfulness
         break;
       default:
-        sortBy = 'date'; // later balance by helpfulness
+        sortBy = '';
     }
 
     var sqlQuery = `
@@ -34,8 +33,7 @@ const models = {
         AS photos
     FROM reviews
     WHERE product_id = ?
-    ORDER BY ${sortBy} DESC
-    LIMIT ?;`;
+    ${sortBy};`;
 
     return pool.query(sqlQuery, [Number(product_id), Number(count)]);
   },
@@ -103,3 +101,12 @@ const models = {
 };
 
 module.exports = models;
+
+
+// total results: 70
+// page: 0
+// count: 5 (means 5 per page)
+// page 0 would be first 5
+// page 1 would be next 5
+// and so on
+

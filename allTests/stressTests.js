@@ -57,7 +57,7 @@ export default function () {
     },
   };
 
-  console.log(`VU-id: ${__VU}  -  Iteration: ${__ITER}`);
+  // console.log(`VU-id: ${__VU}  -  Iteration: ${__ITER}`);
 
   var response = http.get(`http://localhost:4000/reviews/?page=${0}&count=${5}&sort=${'newest'}&product_id=${Math.floor(Math.random() * 1000011)}`);
   check(response, {
