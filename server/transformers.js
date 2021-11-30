@@ -43,7 +43,6 @@ const transformers = {
       results: results
     };
   },
-
 };
 
 module.exports = transformers;

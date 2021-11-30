@@ -9,18 +9,18 @@ const Stage = function(duration, target) {
 const Progression = function(warmUpVUS, peakVUS, coolDownVUS) {
 
   const warmUpTime = 10;
-  // const accelTime = 10;
+  const accelTime = 10;
   const peakTime = 30;
-  // const decelTime =  10;
+  const decelTime =  10;
   const coolDownTime = 10;
 
   var accelVUS = Math.floor((warmUpVUS + peakVUS) / 2);
   var decelVUS = Math.floor((coolDownVUS + peakVUS) / 2);
   return [
     new Stage(warmUpTime, warmUpVUS),
-    // new Stage(accelTime, accelVUS),
+    new Stage(accelTime, accelVUS),
     new Stage(peakTime, peakVUS),
-    // new Stage(decelTime, decelVUS),
+    new Stage(decelTime, decelVUS),
     new Stage(coolDownTime, coolDownVUS)
   ];
 };
@@ -47,7 +47,7 @@ var body = JSON.stringify({
 
 
 export const options = {
-  stages: Progression(20, 500, 20)
+  stages: Progression(20, 300, 20)
 };
 
 export default function () {

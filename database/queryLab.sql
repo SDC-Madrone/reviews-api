@@ -34,3 +34,9 @@ USE ratings_and_reviews;
     WHERE product_id = 49320
     ORDER BY date DESC
     LIMIT 5;
+
+
+
+
+          FROM photos
+          WHERE review_id = reviews.id
