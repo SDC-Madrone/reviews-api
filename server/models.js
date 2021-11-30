@@ -3,6 +3,8 @@ const { groupCharacteristics, generatePlaceholders } = require('./helpers.js');
 
 const models = {
 
+
+
   getReviews: function({ page, count, sort, product_id }) {
     var sortBy;
     switch (sort) {
