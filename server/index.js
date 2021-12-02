@@ -12,8 +12,8 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/loaderio-70fc63e5d24b11fca212227e86c597b2', (req, res) => {
-  res.status(200).send('loaderio-70fc63e5d24b11fca212227e86c597b2');
+app.get(env.loaderIOkey, (req, res) => {
+  res.status(200).send(env.loaderIOKey);
 });
 
 app.get('/payloadGET', controllers.payloadForGet);
