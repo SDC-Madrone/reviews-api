@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/' + process.env.LOADER_IO_KEY, (req, res) => {
-  res.status(200).send(LOADER_IO_KEY);
+  res.status(200).send(process.env.LOADER_IO_KEY);
 });
 
 app.get('/payloadGET', controllers.payloadForGet);
