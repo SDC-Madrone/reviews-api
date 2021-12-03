@@ -2,6 +2,7 @@ const express = require('express');
 const controllers = require('./controllers.js')
 const app = express();
 const PORT = 4000;
+require('dotenv').config();
 
 // define middleware
 app.use(express.json());
@@ -12,8 +13,8 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/loaderio-70fc63e5d24b11fca212227e86c597b2', (req, res) => {
-  res.status(200).send('loaderio-70fc63e5d24b11fca212227e86c597b2');
+app.get('/' + process.env.LOADER_IO_KEY, (req, res) => {
+  res.status(200).send(LOADER_IO_KEY);
 });
 
 app.get('/payloadGET', controllers.payloadForGet);
