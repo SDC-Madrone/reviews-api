@@ -4,3 +4,4 @@ package-lock.json
 /csvData
 *.DS_Store
 connection.js
+*.env
