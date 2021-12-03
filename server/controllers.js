@@ -21,7 +21,7 @@ const controllers = {
     models.getReviews(req.query)
     .then(([rows, fields]) => {
       var responseObject = transformers.reviews(rows, req.query);
-//      console.log(`GET | product_id: ${req.query.product_id} | res 200`);
+//      console.log(`GET | product_id: ${req.query.product_id} count: ${req.query.count} page: ${req.query.page} sort: ${req.query.sort} | res 200`);
       res.status(200).send(responseObject);
     })
     .catch((err) => {
