@@ -1,7 +1,6 @@
 node_modules
 config.js
 package-lock.json
-/csvData
 *.DS_Store
-connection.js
 *.env
+
