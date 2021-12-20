@@ -23,20 +23,6 @@ Response:
 Status: 200 OK
 
 
-# Get Review Metadata
-Returns review metadata for a given product.
-
-`GET /reviews/meta`
-
-Query parameters:
-
-Parameter	    Type	    Description
-product_id	  integer	  Required ID of the product for which data should be returned
-
-Response:
-Status: 200 OK
-
-
 # Add a Review
 Adds a review for the given product.
 
@@ -57,31 +43,3 @@ characteristics	  object literal	  Object of keys representing characteristic_id
 
 Response:
 Status: 201 CREATED
-
-
-# Mark Review as Helpful
-Updates a review to show it was found helpful.
-
-`PUT /reviews/:review_id/helpful`
-
-Request parameters:
-
-Parameter 	Type	    Description
-reveiw_id	  integer	  Required ID of the review to update
-
-Response:
-Status: 204 NO CONTENT
-
-
-# Report Review
-Updates a review to show it was reported. Note, this action does not delete the review, but the review will not be returned in the above GET request.
-
-`PUT /reviews/:review_id/report`
-
-Request parameters:
-
-Parameter	  Type	    Description
-review_id 	integer 	Required ID of the review to update
-
-Response:
-Status: 204 NO CONTENT
