@@ -9,7 +9,7 @@ Atelier API endpoint for product reviews
 # List Reviews
 Returns a list of reviews for a particular product. This list does not include any reported reviews.
 
-`GET /reviews/`
+`GET /reviews`
 
 Query parameters:
 
