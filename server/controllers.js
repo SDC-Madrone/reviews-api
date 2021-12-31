@@ -1,4 +1,5 @@
 const models = require('./models.js');
+const payload = require('../allTests/payload.js');
 const transformers = require('./transformers.js');
 const { isValidRequest } = require('./validateRequest.js');
 // handle requests
@@ -15,11 +16,12 @@ const controllers = {
     req.query.page = req.query.page || 0;
     req.query.count = req.query.count || 5;
     req.query.sort = req.query.sort || 'none';
+    // adding for loader.io tests:
 
     models.getReviews(req.query)
     .then(([rows, fields]) => {
       var responseObject = transformers.reviews(rows, req.query);
-      // console.log(`GET | product_id: ${req.query.product_id} | res 200`);
+//      console.log(`GET | product_id: ${req.query.product_id} | res 200`);
       res.status(200).send(responseObject);
     })
     .catch((err) => {
@@ -52,16 +54,14 @@ const controllers = {
       });
   },
 
-  testDocker: function(req, res) {
-    models.testRequest()
-      .then(([rows, fields]) => {
-        console.log('got this row bro: ', rows)
-        res.status(200).send(rows);
-      })
-      .catch((err) => {
-        console.log('error testing docker', err);
-        res.status(404).send(err);
-      });
+
+  
+  payloadForGet: function(req, res) {
+    res.status(200).send(payload.generateValues(req.query.amount, payload.getQueryParams));
+  },
+
+  payloadForPost: function(req, res) {
+    res.status(200).send(payload.generateValues(req.query.amount, payload.postBodyParams));
   }
 
 };
