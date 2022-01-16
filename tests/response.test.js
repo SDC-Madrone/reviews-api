@@ -53,13 +53,13 @@ describe('tests for GET /reviews',  function() {
 });
 
 var sampleBody = {
-  "product_id": 9002,
+  "product_id": 9004,
   "rating": 4,
-  "summary": "Great hat",
-  "body": "What a great product, I avoided many sunburns and hope everyone with sensitive skin will enjoy the mesh comfort",
+  "summary": "I love this hat",
+  "body": "I really enjoyed the mesh comfort",
   "recommend": true,
-  "name": "tom_tomato94",
-  "email": "tomatoes@nightshade.com",
+  "name": "jest_tester7",
+  "email": "jesting@test.com",
   "photos": [
       "https://www.google.com/search?q=sea+otter&sxsrf=AOaemvJ9TtTJqiWPY3MElH-UhH3C28tRPw:1637737601528&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjxr-X_t7D0AhUKlIkEHYOWC3MQ_AUoAXoECAEQAw&biw=2048&bih=1062&dpr=1.25#imgrc=_WBlfFF9OinySM",
       "https://www.google.com/search?q=sea+otter&sxsrf=AOaemvJ9TtTJqiWPY3MElH-UhH3C28tRPw:1637737601528&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjxr-X_t7D0AhUKlIkEHYOWC3MQ_AUoAXoECAEQAw&biw=2048&bih=1062&dpr=1.25#imgrc=7Ay615yrIYTq9M"
@@ -113,7 +113,7 @@ describe('tests for POST reviews', function() {
           null
       ],
       "characteristics": {"5": 10, "9": null, "27": -4}
-    }
+    };
 
     await request(app).post('/reviews')
       .send(badlyTypedBody);
@@ -124,10 +124,4 @@ describe('tests for POST reviews', function() {
     pool.end();
 
   });
-
-
-  // test('should add review metadata to the "characteristic_reviews" table in database', async function() {
-  //   sampleBody.product_id++;
-  //   await request
-  // });
 });
