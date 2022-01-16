@@ -13,7 +13,7 @@ Returns a list of reviews for a particular product. This list does not include a
 `GET /reviews`
 Query parameters:
 | Parameter | Type | Description |
-| :---: | :---: | :---: |
+| :---: | :---: | :--- |
 | `page` | integer | Selects the page of results to return - default 1 |
 | `count`	| integer	| Specifies how many results per page to return - default 5. |
 | `sort` | string | Changes the sort order of reviews to be based on "newest", "helpful", or "relevant" |
@@ -30,7 +30,7 @@ Adds a review for the given product.
 `POST /reviews`
 Body parameters:
 | Parameter | Type | Description |
-| :---: | :---: | :---: |
+| :---: | :---: | :--- |
 | `product_id` | integer | Required ID of the product to post the review for |
 | `rating` | integer | 1-5 indicating the review rating |
 | `summary` | string | (optional) Summary text of the review - if none, the empty string "" should be sent |
