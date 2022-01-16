@@ -12,8 +12,8 @@ app.get('/reviews', controllers.handleGetReviews);
 app.post('/reviews', controllers.handlePostReivews);
 
 // production port - comment out lines 15-17 to allow jest-supertest to run
-// app.listen(PORT, () => {
-//   console.log(`listening on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`);
+});
 
 module.exports = app;
