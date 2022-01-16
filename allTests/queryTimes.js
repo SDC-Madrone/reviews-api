@@ -2,31 +2,57 @@ const app = require('../server/index.js');
 const pool = require('../server/connection.js');
 const request = require('supertest');
 
-// increment 5 each test
-const GET_PRODUCT_ID = 5197477;
-const POST_PRODUCT_ID = 77;
 
-const SORT_BY = 'helpful';
-const COUNT = 5;
-const PAGE = 0;
+const readline = require('readline');
+const { stdin: input, stdout: output } = require('process');
+const rl = readline.createInterface({ input, output });
 
-var increment = 0;
-var sampleBody = {
-  "product_id": POST_PRODUCT_ID + increment,
-  "rating": 4,
-  "summary": "I think I had a dream about this hat",
-  "body": "What a great product, I avoided many-a-sunburns and hope everyone with sensitive forehead skin will enjoy the mesh comfort",
-  "recommend": true,
-  "name": "too_much_sun52",
-  "email": "tomatoes@bean.net",
-  "photos": [
-      "https://www.google.com/search?q=sea+otter&sxsrf=AOaemvJ9TtTJqiWPY3MElH-UhH3C28tRPw:1637737601528&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjxr-X_t7D0AhUKlIkEHYOWC3MQ_AUoAXoECAEQAw&biw=2048&bih=1062&dpr=1.25#imgrc=_WBlfFF9OinySM",
-      "https://www.google.com/search?q=sea+otter&sxsrf=AOaemvJ9TtTJqiWPY3MElH-UhH3C28tRPw:1637737601528&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjxr-X_t7D0AhUKlIkEHYOWC3MQ_AUoAXoECAEQAw&biw=2048&bih=1062&dpr=1.25#imgrc=7Ay615yrIYTq9M"
-  ],
-  "characteristics": {"15": 3, "9": 4, "27": 3}
+
+const promptParameters = function(prompt) {
+  return new Promise((resolve, reject) => {
+    rl.question(prompt, (answer) => {
+      resolve(answer);
+      rl.close();
+    });
+  });
 };
 
-const testGet = () => {
+
+const promptGET = function() {
+  var GET_PRODUCT_ID, POST_PRODUCT_ID, COUNT, PAGE, SORT_BY;
+  promptParameters('Enter product ID to get reviews for: ')
+  .then((answer) => {
+    GET_PRODUCT_ID = answer;
+    return promptParameters('Eneter product ID to post reviews to: ');
+  })
+  .then((answer) => {
+    POST_PRODUCT_ID = answer;
+    return promptParameters('Enter count: ');
+  })
+  .then((answer) => {
+    COUNT = answer;
+    return promptParameters('Enter page: ');
+  })
+  .then((answer) => {
+    PAGE = answer;
+    return promptParameters('Enter sort method [newest | relevant | helpful]: '
+  })
+  .then((answer) => {
+    SORT_BY = answer;
+    testGet(GET_PRODUCT_ID, COUNT, PAGE, SORT_BY);
+  })
+  .catch((err) => {
+    console.err('Prompt error: ', err);
+  });
+};
+
+
+const promptPOST = function() {
+  var POST_PRODUCT_ID;
+}
+
+
+const testGet = (GET_PRODUCT_ID, COUNT, PAGE, SORT_BY) => {
   var getStartTime = Date.now();
   console.log('testing GET...');
   request(app).get(`/reviews/?page=${PAGE}&count=${COUNT}&sort=${SORT_BY}&product_id=${GET_PRODUCT_ID}`)
@@ -53,38 +79,53 @@ const testGet = () => {
       testPost();
     })
     .catch((err) => {
-      console.log('error testing GET');
+      console.error('error testing GET', err);
       pool.end();
-      throw err;
     });
 };
 
-const testPost = () => {
+const testPost = (POST_PRODUCT_ID) => {
+  var sampleBody = {
+    "product_id": POST_PRODUCT_ID,
+    "rating": 4,
+    "summary": "I love this hat",
+    "body": "I really enjoyed the mesh comfort",
+    "recommend": true,
+    "name": "sun_beetle3",
+    "email": "testing@test.com",
+    "photos": [
+        "https://www.google.com/search?q=sea+otter&sxsrf=AOaemvJ9TtTJqiWPY3MElH-UhH3C28tRPw:1637737601528&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjxr-X_t7D0AhUKlIkEHYOWC3MQ_AUoAXoECAEQAw&biw=2048&bih=1062&dpr=1.25#imgrc=_WBlfFF9OinySM",
+        "https://www.google.com/search?q=sea+otter&sxsrf=AOaemvJ9TtTJqiWPY3MElH-UhH3C28tRPw:1637737601528&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjxr-X_t7D0AhUKlIkEHYOWC3MQ_AUoAXoECAEQAw&biw=2048&bih=1062&dpr=1.25#imgrc=7Ay615yrIYTq9M"
+    ],
+    "characteristics": {"15": 3, "9": 4, "27": 3}
+  };
+
+
   var postStartTime = Date.now();
   console.log('testing POST...');
 
   request(app).post(`/reviews`)
     .send(sampleBody)
       .then(() => {
-        increment++;
+
         console.log('testing POST...');
         return request(app).post(`/reviews`)
           .send(sampleBody);
       })
       .then(() => {
-        increment++;
+
         console.log('testing POST...');
         return request(app).post(`/reviews`)
           .send(sampleBody);
       })
       .then(() => {
-        increment++;
+
         console.log('testing POST...');
         return request(app).post(`/reviews`)
           .send(sampleBody);
       })
       .then(() => {
-        increment++;
+
         console.log('testing POST...');
         return request(app).post(`/reviews`)
           .send(sampleBody);
@@ -95,9 +136,8 @@ const testPost = () => {
         console.log(`average POST request time: ${avg}`);
         pool.end();
       }).catch((err) => {
-        console.log('error testing POST ');
+        console.log('error testing POST', err);
         pool.end();
-        throw err;
       });
 };
 
