@@ -10,7 +10,7 @@ Endpoint for product reviews
 ### List Reviews:
 Returns a list of reviews for a particular product. This list does not include any reported reviews.
 
-`GET /reviews`
+`GET /reviews` <br />
 Query parameters:
 | Parameter | Type | Description |
 | :---: | :---: | :--- |
@@ -27,7 +27,7 @@ Status: `200 OK`
 ### Add a Review:
 Adds a review for the given product.
 
-`POST /reviews`
+`POST /reviews` <br />
 Body parameters:
 | Parameter | Type | Description |
 | :---: | :---: | :--- |
