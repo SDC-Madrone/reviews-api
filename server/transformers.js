@@ -1,17 +1,14 @@
 
 const transformers = {
-  // assembles the response object
-  // In: an array of query results and the req.params object
   reviews: function(reviewObjectsWithPhotos, { page, count, product_id }) {
     page = Number(page);
     count = Number(count);
     var totalCount = reviewObjectsWithPhotos.length;
     var startIndex = page * count;
-    // if page over-specified
+
     if (startIndex >= totalCount) {
       reviewObjectsWithPhotos = [];
     } else {
-      // otherwise get the starting index for page specified
       var stopIndex;
       if (startIndex + count > totalCount) {
         stopIndex = totalCount;

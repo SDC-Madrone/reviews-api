@@ -8,7 +8,6 @@ const controllers = {
     if (req.query.product_id === undefined) {
       console.log(`GET | res 400`);
       res.status(400).send('Bad request: Need query parameter "product_id"');
-
     } else {
       req.query.page = req.query.page || 0;
       req.query.count = req.query.count || 5;
@@ -31,7 +30,6 @@ const controllers = {
     if (!isValidRequest(req.body)) {
       console.error('POST | res 400');
       res.status(400).send('Missing body parameters');
-
     } else {
       models.postReviews(req.body)
         .then(() => {
