@@ -1,29 +1,26 @@
 const app = require('../server/index.js');
 const pool = require('../server/connection.js');
 const request = require('supertest');
-
-
 const readline = require('readline');
 const { stdin: input, stdout: output } = require('process');
 const rl = readline.createInterface({ input, output });
-
 
 const promptParameters = function(prompt) {
   return new Promise((resolve, reject) => {
     rl.question(prompt, (answer) => {
       resolve(answer);
-      rl.close();
+
     });
   });
 };
 
 
-const promptGET = function() {
+const promptTests = function() {
   var GET_PRODUCT_ID, POST_PRODUCT_ID, COUNT, PAGE, SORT_BY;
   promptParameters('Enter product ID to get reviews for: ')
   .then((answer) => {
     GET_PRODUCT_ID = answer;
-    return promptParameters('Eneter product ID to post reviews to: ');
+    return promptParameters('Enter product ID to post reviews to: ');
   })
   .then((answer) => {
     POST_PRODUCT_ID = answer;
@@ -35,24 +32,21 @@ const promptGET = function() {
   })
   .then((answer) => {
     PAGE = answer;
-    return promptParameters('Enter sort method [newest | relevant | helpful]: '
+    return promptParameters('Enter sort method [newest | relevant | helpful]: ');
   })
   .then((answer) => {
     SORT_BY = answer;
-    testGet(GET_PRODUCT_ID, COUNT, PAGE, SORT_BY);
+    rl.close();
+    testGet(GET_PRODUCT_ID, POST_PRODUCT_ID, COUNT, PAGE, SORT_BY);
   })
   .catch((err) => {
     console.err('Prompt error: ', err);
+    rl.close();
   });
 };
 
 
-const promptPOST = function() {
-  var POST_PRODUCT_ID;
-}
-
-
-const testGet = (GET_PRODUCT_ID, COUNT, PAGE, SORT_BY) => {
+const testGet = (GET_PRODUCT_ID, POST_PRODUCT_ID, COUNT, PAGE, SORT_BY) => {
   var getStartTime = Date.now();
   console.log('testing GET...');
   request(app).get(`/reviews/?page=${PAGE}&count=${COUNT}&sort=${SORT_BY}&product_id=${GET_PRODUCT_ID}`)
@@ -76,7 +70,7 @@ const testGet = (GET_PRODUCT_ID, COUNT, PAGE, SORT_BY) => {
       var getEndTime = Date.now();
       var avg = ((getEndTime - getStartTime) / 1000) / 5;
       console.log(`average GET request time: ${avg}`);
-      testPost();
+      testPost(POST_PRODUCT_ID);
     })
     .catch((err) => {
       console.error('error testing GET', err);
@@ -84,9 +78,9 @@ const testGet = (GET_PRODUCT_ID, COUNT, PAGE, SORT_BY) => {
     });
 };
 
-const testPost = (POST_PRODUCT_ID) => {
+const testPost = (post_product_id) => {
   var sampleBody = {
-    "product_id": POST_PRODUCT_ID,
+    "product_id": post_product_id,
     "rating": 4,
     "summary": "I love this hat",
     "body": "I really enjoyed the mesh comfort",
@@ -100,33 +94,31 @@ const testPost = (POST_PRODUCT_ID) => {
     "characteristics": {"15": 3, "9": 4, "27": 3}
   };
 
-
   var postStartTime = Date.now();
   console.log('testing POST...');
-
   request(app).post(`/reviews`)
     .send(sampleBody)
       .then(() => {
-
         console.log('testing POST...');
+        sampleBody.post_product_id++
         return request(app).post(`/reviews`)
           .send(sampleBody);
       })
       .then(() => {
-
         console.log('testing POST...');
+        sampleBody.post_product_id++
         return request(app).post(`/reviews`)
           .send(sampleBody);
       })
       .then(() => {
-
         console.log('testing POST...');
+        sampleBody.post_product_id++
         return request(app).post(`/reviews`)
           .send(sampleBody);
       })
       .then(() => {
-
         console.log('testing POST...');
+        sampleBody.post_product_id++
         return request(app).post(`/reviews`)
           .send(sampleBody);
       })
@@ -141,4 +133,4 @@ const testPost = (POST_PRODUCT_ID) => {
       });
 };
 
-testGet();
+promptTests();
