@@ -9,13 +9,8 @@ app.use(express.json());
 
 // routes
 app.get('/', (req, res) => {
-  res.status(200).send('This endpoint won\'t serve anything useful. Please specify /reviews or /reviews/meta in your path');
+  res.status(200).send('This endpoint won\'t serve anything useful. Please specify /reviews in your path');
 })
-
-
-app.get('/' + process.env.LOADER_IO_KEY, (req, res) => {
-  res.status(200).send(process.env.LOADER_IO_KEY);
-});
 
 app.get('/payloadGET', controllers.payloadForGet);
 app.get('/payloadPOST', controllers.payloadForPost);
