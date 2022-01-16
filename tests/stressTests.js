@@ -7,7 +7,6 @@ const Stage = function(duration, target) {
 };
 
 const Progression = function(warmUpVUS, peakVUS, coolDownVUS) {
-
   const warmUpTime = 10;
   const accelTime = 10;
   const peakTime = 30;
@@ -38,13 +37,11 @@ var body = JSON.stringify({
   "summary": "test",
   "body": "testing",
   "recommend": false,
-  "name": "tester_bester_hecc",
-  "email": "tomatoes@nightshade.com",
+  "name": "tester_bester",
+  "email": "testingK6@testing.com",
   "photos": [],
   "characteristics": characteristics
-  // "characteristics": {"10": 1, "9": 3, "15": 5}
 });
-
 
 export const options = {
   stages: Progression(20, 300, 20)
@@ -57,21 +54,16 @@ export default function () {
     },
   };
 
-  // console.log(`VU-id: ${__VU}  -  Iteration: ${__ITER}`);
-
   var response = http.get(`http://localhost:4000/reviews/?page=${0}&count=${5}&sort=${'newest'}&product_id=${Math.floor(Math.random() * 1000011)}`);
   check(response, {
-    'status was 200?:': (r) => r.status === 200
+    'status was 200:': (r) => r.status === 200
   });
 
+  // comment out lines 59-62 and uncomment the below to test POST /reviews
   // var response = http.post(`http://localhost:4000/reviews/`, body, params);
   //   check(response, {
-  //   'status was 201?:': (r) => r.status === 201
+  //   'status was 201:': (r) => r.status === 201
   // });
 
   sleep(1);
 };
-
-// resume reading docs here: https://k6.io/docs/using-k6/http-requests/
-// max characteristic_id: 3347679
-// max product_id: 1000011

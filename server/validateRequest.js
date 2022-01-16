@@ -1,5 +1,3 @@
-
-
 const validators = {
   isValidRequest: function(body) {
     if (!body || !validators.isObjectLiteral(body)) {
@@ -24,7 +22,5 @@ const validators = {
     return typeof obj === 'object' && obj !== null && !Array.isArray(obj);
   }
 };
-
-// in the future, it may help to validate types and collections
 
 module.exports = validators;

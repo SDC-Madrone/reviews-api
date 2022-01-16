@@ -2,9 +2,7 @@ const pool = require('./connection.js');
 const { groupCharacteristics, generatePlaceholders } = require('./helpers.js');
 
 const models = {
-
   getReviews: function({ page, count, sort, product_id }) {
-
     var sortBy;
     switch (sort) {
       case "newest":
@@ -92,21 +90,7 @@ const models = {
       COMMIT;`;
 
     return pool.query(sqlQuery, groupedValues);
-  },
-
-  testRequest: function() {
-    var sqlQuery = `SELECT * FROM genera;`;
-    return pool.query(sqlQuery);
   }
 };
 
 module.exports = models;
-
-
-// total results: 70
-// page: 0
-// count: 5 (means 5 per page)
-// page 0 would be first 5
-// page 1 would be next 5
-// and so on
-
