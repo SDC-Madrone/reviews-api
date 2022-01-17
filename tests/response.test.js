@@ -99,7 +99,6 @@ describe('tests for POST reviews', function() {
   });
 
   test('failed writes should maintain ACID protocol', async function() {
-    // give complete request with null/wrong-type fields
     var badlyTypedBody = {
       "product_id": 600,
       "rating": 4,
@@ -119,7 +118,6 @@ describe('tests for POST reviews', function() {
       .send(badlyTypedBody);
     const response = await request(app).get(`/reviews/?page=0&count=5&sort=newest&product_id=${600}`);
     var reviewNames = response.body.results.map(review => review.reviewer_name);
-    // console.log('results:', response.body.results);
     expect(reviewNames).not.toContain('hacker94');
     pool.end();
 
