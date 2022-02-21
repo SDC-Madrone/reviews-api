@@ -1,7 +1,7 @@
 # Atelier Reviews API
 Endpoint for product reviews
 
-# Dependencies:
+### Dependencies:
 - express v4.17.1
 - mysql2 v2.3.3
 - nodemon v2.0.15
