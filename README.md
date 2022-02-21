@@ -24,7 +24,7 @@ $ mysql -u <username> -p <password> < database/schema.sql
 to seed the database schema <br />
 Ensure the mysql server on your machine is running and then
 ```shell
-npm start
+$ npm start
 ```
 to start the nodemon server. <br />
 
