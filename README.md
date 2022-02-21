@@ -14,15 +14,21 @@ Endpoint for product reviews
 After forking and cloning down the repo, create a `.env` file in the root directory with the same keys listed in `dotenv.example.txt`. Ensure that the `.env` file is gitignored. <br />
 
 Run the following commands from the root directory:
-```npm install```
+```shell
+$ npm install
+```
 to install all necessary dependencies
-```mysql -u <username> -p <password> < database/schema.sql```
+```shell
+$ mysql -u <username> -p <password> < database/schema.sql
+```
 to seed the database schema <br />
 Ensure the mysql server on your machine is running and then
-```npm start```
+```shell
+npm start
+```
 to start the nodemon server. <br />
 
-For load balancing setup, see `nginx.example.conf` <br />
+For load balancing setup, see `nginx.example.conf`. <br />
 
 
 ### List Reviews:
