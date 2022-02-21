@@ -1,0 +1,5 @@
+DB_NAME="database to use"
+DB_USER="MySQL username"
+DB_PASSWORD="MySQL password"
+PATH_TO_CSVS="path/to/file"
+DB_IP_ADDRESS="111.222.333.444"
